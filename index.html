@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090812">
+<title>Allstore — Your Space</title>
+<style>
+:root{--bg:#090812;--panel:rgba(255,255,255,.075);--line:rgba(255,255,255,.13);--text:#f7f5ff;--muted:#a7a2ba;--accent:#a78bfa;--accent2:#6d5dfc;--radius:22px}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#29204c 0,transparent 38%),radial-gradient(ellipse at 95% 30%,#1d1640 0,transparent 34%),var(--bg);color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+button,input{font:inherit}button{color:inherit;cursor:pointer}.glass{background:var(--panel);border:1px solid var(--line);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:0 12px 40px #0003,inset 0 1px #ffffff10}
+.app{display:grid;grid-template-columns:250px 1fr;min-height:100vh;gap:18px;padding:18px}.sidebar{border-radius:26px;padding:22px 16px;position:sticky;top:18px;height:calc(100vh - 36px);display:flex;flex-direction:column}
+.brand{display:flex;align-items:center;gap:11px;padding:4px 8px 28px;font-size:19px;font-weight:750;letter-spacing:-.5px}.logo{width:36px;height:36px;border-radius:13px;background:linear-gradient(135deg,#c4b5fd,#6d5dfc 55%,#4c1d95);box-shadow:0 0 25px #8b5cf677;display:grid;place-items:center;font-weight:900}
+.nav-label{color:#77718f;font-size:10px;letter-spacing:1.6px;font-weight:800;padding:12px 12px 8px}.nav{display:flex;flex-direction:column;gap:5px}.nav button{border:0;background:transparent;color:var(--muted);padding:12px 13px;text-align:left;border-radius:14px;display:flex;gap:12px;align-items:center;transition:.25s}.nav button:hover,.nav button.active{background:linear-gradient(100deg,#a78bfa27,#6d5dfc16);color:white;box-shadow:inset 0 0 0 1px #b9a4ff25}.nav .ico{width:19px;text-align:center;font-size:17px}.side-bottom{margin-top:auto}.profile{display:flex;align-items:center;gap:10px;padding:14px 9px 3px;border-top:1px solid var(--line);margin-top:20px}.avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#f0abfc,#818cf8);display:grid;place-items:center;color:#1a1230;font-weight:800}.profile small{display:block;color:var(--muted);font-size:11px}
+main{min-width:0;padding:8px 10px 30px}.topbar{display:flex;align-items:center;gap:14px;margin:4px 0 28px}.mobile-brand{display:none;font-weight:800}.search{flex:1;max-width:560px;position:relative}.search input{width:100%;padding:13px 16px 13px 43px;border:1px solid var(--line);border-radius:15px;background:#ffffff0b;color:white;outline:none}.search input:focus{border-color:#a78bfa88;box-shadow:0 0 0 3px #a78bfa18}.search span{position:absolute;left:15px;top:10px;color:var(--muted);font-size:18px}.top-actions{margin-left:auto;display:flex;gap:9px}.icon-btn,.primary,.secondary{border:1px solid var(--line);border-radius:14px;padding:11px 14px;background:#ffffff0b;transition:.25s}.icon-btn:hover,.secondary:hover{background:#ffffff17;transform:translateY(-2px)}.primary{border:0;background:linear-gradient(135deg,#a78bfa,#6d5dfc);font-weight:700;box-shadow:0 8px 25px #6d5dfc40}.primary:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.hero{border-radius:27px;padding:28px 30px;margin-bottom:22px;position:relative;overflow:hidden;background:linear-gradient(115deg,#ffffff12,#ffffff04),radial-gradient(circle at 85% 35%,#8b5cf655,transparent 30%);}.hero:after{content:"";position:absolute;width:240px;height:240px;border-radius:50%;right:7%;top:-125px;border:1px solid #ffffff20;box-shadow:0 0 0 24px #ffffff08,0 0 0 50px #ffffff05}.eyebrow{color:#c4b5fd;text-transform:uppercase;letter-spacing:1.8px;font-size:10px;font-weight:800}.hero h1{font-size:clamp(26px,4vw,40px);letter-spacing:-1.5px;margin:8px 0 5px}.hero p{color:var(--muted);margin:0 0 20px;max-width:470px}.hero-buttons{display:flex;gap:10px;flex-wrap:wrap;position:relative;z-index:1}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:26px}.stat{padding:17px 19px;border-radius:19px}.stat .muted{color:var(--muted);font-size:12px}.stat strong{display:block;font-size:25px;margin-top:4px;letter-spacing:-.7px}.stat .symbol{float:right;color:#c4b5fd;font-size:20px}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:22px 0 14px}.section-head h2{font-size:17px;margin:0;letter-spacing:-.3px}.section-head small{color:var(--muted)}.filters{display:flex;gap:7px;flex-wrap:wrap}.filter{border:1px solid var(--line);background:#ffffff08;color:var(--muted);padding:7px 12px;border-radius:999px;font-size:12px}.filter.active{background:#a78bfa25;color:#fff;border-color:#a78bfa66}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.file-card{border-radius:19px;overflow:hidden;min-width:0;transition:.25s;animation:rise .5s both}.file-card:hover{transform:translateY(-4px);border-color:#c4b5fd55}.thumb{height:145px;background:linear-gradient(135deg,#292044,#17132b);display:grid;place-items:center;overflow:hidden;position:relative}.thumb img,.thumb video{width:100%;height:100%;object-fit:cover}.file-icon{font-size:38px;filter:drop-shadow(0 8px 15px #0007)}.file-info{padding:12px}.file-name{font-size:13px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.file-meta{font-size:11px;color:var(--muted);margin-top:4px;display:flex;justify-content:space-between}.file-actions{display:flex;gap:6px;margin-top:10px}.file-actions button{flex:1;padding:7px;border-radius:9px;border:1px solid var(--line);background:#ffffff09;font-size:11px}.empty{grid-column:1/-1;padding:42px 15px;text-align:center;color:var(--muted);border:1px dashed #ffffff2b;border-radius:18px}.empty b{display:block;color:white;margin-bottom:5px}
+.page{display:none}.page.active{display:block}.upload-zone{border:1px dashed #b9a4ff66;background:#a78bfa0b;border-radius:22px;padding:38px 20px;text-align:center}.upload-zone .big{font-size:38px}.upload-zone h2{margin:8px 0 4px}.upload-zone p{color:var(--muted);margin:0 0 17px}.setting-card{padding:20px;border-radius:20px;margin-bottom:13px}.setting-card h3{margin:0 0 5px}.setting-card p{color:var(--muted);font-size:13px;margin:0 0 15px}.setting-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 0;border-top:1px solid var(--line)}.setting-row input[type=color]{width:44px;height:32px;border:0;background:none}.switch{accent-color:#a78bfa;width:18px;height:18px}.customizer{display:grid;grid-template-columns:1fr 270px;gap:14px}.preview{border-radius:22px;padding:20px;min-height:360px}.preview-block{padding:16px;border:1px solid var(--line);border-radius:15px;margin:9px 0;background:#ffffff09;cursor:grab}.preview-block.dragging{opacity:.4}.custom-panel{border-radius:22px;padding:18px}.custom-panel label{display:block;font-size:12px;color:var(--muted);margin:12px 0 5px}.custom-panel input,.custom-panel select{width:100%;background:#ffffff0c;color:white;border:1px solid var(--line);padding:10px;border-radius:10px}.custom-panel select option{background:#17132b}.toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,20px);background:#29213f;border:1px solid #ffffff2a;padding:11px 17px;border-radius:14px;opacity:0;pointer-events:none;transition:.3s;z-index:20}.toast.show{opacity:1;transform:translate(-50%,0)}.modal-back{position:fixed;inset:0;background:#05040bd9;display:none;place-items:center;padding:20px;z-index:30}.modal-back.show{display:grid}.modal{width:min(440px,100%);padding:22px;border-radius:22px}.modal h2{margin:0 0 6px}.modal p{color:var(--muted);font-size:13px}.modal input{width:100%;padding:12px;background:#ffffff0b;color:white;border:1px solid var(--line);border-radius:12px;margin:8px 0 14px}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:1050px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:760px){.app{display:block;padding:10px}.sidebar{position:fixed;z-index:15;top:auto;bottom:9px;left:9px;right:9px;width:auto;height:auto;padding:8px;border-radius:20px;flex-direction:row;justify-content:space-around}.brand,.nav-label,.side-bottom{display:none}.nav{flex-direction:row;width:100%;justify-content:space-around;gap:2px}.nav button{flex:1;justify-content:center;flex-direction:column;gap:2px;padding:7px 2px;font-size:10px}.nav .ico{font-size:17px}.profile{display:none}main{padding:8px 4px 100px}.topbar{margin:5px 0 18px}.mobile-brand{display:block}.search{max-width:none}.search input{padding:11px 10px 11px 34px;font-size:12px}.search span{left:10px;top:7px}.top-actions .icon-btn{display:none}.hero{padding:22px 19px}.stats{gap:8px}.stat{padding:13px}.stat strong{font-size:20px}.stat .muted{font-size:10px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.thumb{height:120px}.customizer{grid-template-columns:1fr}.custom-panel{order:-1}}
+@media(max-width:380px){.grid{grid-template-columns:1fr 1fr}.file-info{padding:9px}.stats{grid-template-columns:1fr 1fr}.stats .stat:last-child{display:none}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar glass">
+  <div class="brand"><div class="logo">A</div> allstore<span style="color:#a78bfa">.</span></div>
+  <div class="nav-label">WORKSPACE</div>
+  <nav class="nav">
+    <button class="active" data-page="home"><span class="ico">⌂</span>Home</button>
+    <button data-page="library"><span class="ico">▦</span>Library</button>
+    <button data-page="upload"><span class="ico">＋</span>Upload</button>
+    <button data-page="customize"><span class="ico">✧</span>Customize</button>
+    <button data-page="settings"><span class="ico">⚙</span>Settings</button>
+  </nav>
+  <div class="side-bottom"><div class="nav-label">ACCOUNT</div><div class="profile"><div class="avatar">A</div><div><b>Workspace</b><small>Personal library</small></div></div></div>
+</aside>
+<main>
+  <div class="topbar">
+    <div class="mobile-brand">allstore<span style="color:#a78bfa">.</span></div>
+    <div class="search"><span>⌕</span><input id="search" placeholder="Search your files..." /></div>
+    <div class="top-actions"><button class="icon-btn" id="themeBtn" title="Toggle glow">✧</button><button class="primary" id="topUpload">＋ Upload</button></div>
+  </div>
+  <section class="page active" id="page-home">
+    <div class="hero glass">
+      <div class="eyebrow">YOUR PERSONAL SPACE</div>
+      <h1>Everything, in one place.</h1>
+      <p>A beautiful space for your photos, videos, documents and more. Keep your digital world organized.</p>
+      <div class="hero-buttons"><button class="primary" id="heroUpload">＋ Add files</button><button class="secondary" data-go="library">Explore library ↗</button></div>
+    </div>
+    <div class="stats">
+      <div class="stat glass"><span class="symbol">▧</span><div class="muted">Total files</div><strong id="totalCount">0</strong></div>
+      <div class="stat glass"><span class="symbol">▣</span><div class="muted">Images & videos</div><strong id="mediaCount">0</strong></div>
+      <div class="stat glass"><span class="symbol">◈</span><div class="muted">Storage used</div><strong id="storageCount">0 MB</strong></div>
+    </div>
+    <div class="section-head"><div><h2>Recently added</h2><small>Your latest uploads</small></div><button class="secondary" data-go="library">View all ↗</button></div>
+    <div class="grid" id="recentGrid"></div>
+  </section>
+  <section class="page" id="page-library">
+    <div class="section-head"><div><h2>My Library</h2><small>All your files, organized</small></div><button class="primary" id="libraryUpload">＋ Upload</button></div>
+    <div class="section-head"><div class="filters"><button class="filter active" data-filter="all">All files</button><button class="filter" data-filter="image">Images</button><button class="filter" data-filter="video">Videos</button><button class="filter" data-filter="other">Other</button></div><small id="libraryCount">0 items</small></div>
+    <div class="grid" id="libraryGrid"></div>
+  </section>
+  <section class="page" id="page-upload">
+    <div class="section-head"><div><h2>Upload files</h2><small>Add content to your personal library</small></div></div>
+    <div class="upload-zone glass" id="dropZone"><div class="big">⇧</div><h2>Drop files here</h2><p>or browse from your device. Images, videos, documents and more.</p><button class="primary" id="browseBtn">Choose files</button><input type="file" id="fileInput" multiple hidden></div>
+    <div class="setting-card glass" style="margin-top:15px"><h3>Supported content</h3><p>Images · Videos · Audio · PDF · Documents · Archives · Other files</p><small style="color:var(--muted)">This starter version stores files in this browser on this device.</small></div>
+  </section>
+  <section class="page" id="page-customize">
+    <div class="section-head"><div><h2>Customize workspace</h2><small>Make your space feel like yours</small></div><button class="primary" id="saveDesign">Save changes</button></div>
+    <div class="customizer">
+      <div class="preview glass"><div class="eyebrow">LIVE PREVIEW · DRAG TO REORDER</div><h2 style="margin:6px 0 14px">Your workspace</h2><div id="blocks">
+        <div class="preview-block" draggable="true" data-block="welcome">✦ &nbsp; Welcome banner</div>
+        <div class="preview-block" draggable="true" data-block="stats">▦ &nbsp; Storage overview</div>
+        <div class="preview-block" draggable="true" data-block="recent">◷ &nbsp; Recent files</div>
+        <div class="preview-block" draggable="true" data-block="quick">＋ &nbsp; Quick upload</div>
+      </div></div>
+      <div class="custom-panel glass"><h3 style="margin:0">Appearance</h3><label>Accent color</label><input type="color" id="accentPicker" value="#a78bfa"><label>Corner style</label><select id="cornerStyle"><option value="22px">Soft / Rounded</option><option value="12px">Compact</option><option value="30px">Extra rounded</option></select><label>Glass intensity</label><input type="range" id="glassRange" min="3" max="15" value="7" style="padding:0"><p style="font-size:11px;color:var(--muted);margin-top:14px">Drag preview sections to change their order. Your settings are saved in this browser.</p></div>
+    </div>
+  </section>
+  <section class="page" id="page-settings">
+    <div class="section-head"><div><h2>Settings</h2><small>Manage your Allstore experience</small></div></div>
+    <div class="setting-card glass"><h3>Workspace</h3><p>Personalize the name shown in your dashboard.</p><div class="setting-row"><span>Workspace name</span><input id="workspaceName" value="Personal library" style="max-width:180px;background:#ffffff0c;color:white;border:1px solid var(--line);padding:8px;border-radius:9px"></div><div class="setting-row"><span>Motion effects</span><input class="switch" type="checkbox" id="motionToggle" checked></div></div>
+    <div class="setting-card glass"><h3>Data & privacy</h3><p>Your current demo library stays in this browser. Clearing browser data may remove locally saved files.</p><div class="setting-row"><span>Export library list</span><button class="secondary" id="exportBtn">Export JSON</button></div><div class="setting-row"><span>Delete all local files</span><button class="secondary" id="clearBtn" style="color:#fca5a5">Clear library</button></div></div>
+    <div class="setting-card glass"><h3>Cloud storage</h3><p>Cloud upload, secure admin accounts and public/private sharing will be connected in the deployment stage. This local prototype does not yet upload files to the internet.</p><span class="eyebrow">CLOUD CONNECTION · NOT CONFIGURED</span></div>
+  </section>
+</main>
+</div>
+<div class="toast" id="toast"></div>
+<div class="modal-back" id="modal"><div class="modal glass"><h2 id="modalTitle">Delete file?</h2><p id="modalText">This action cannot be undone.</p><div style="display:flex;gap:8px;justify-content:flex-end"><button class="secondary" id="cancelModal">Cancel</button><button class="primary" id="confirmModal">Confirm</button></div></div></div>
+<script>
+const DB='allstore_local_v1', STORE='files'; let db, files=[], activeFilter='all', pendingAction=null;
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+function toast(t){let e=$('#toast');e.textContent=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2300)}
+function openDB(){return new Promise((resolve,reject)=>{let r=indexedDB.open(DB,1);r.onupgradeneeded=()=>r.result.createObjectStore(STORE,{keyPath:'id'});r.onsuccess=()=>{db=r.result;resolve()};r.onerror=()=>reject(r.error)})}
+function tx(mode='readonly'){return db.transaction(STORE,mode).objectStore(STORE)}
+function getAll(){return new Promise(res=>{let r=tx().getAll();r.onsuccess=()=>res(r.result.sort((a,b)=>b.added-a.added))})}
+function saveFile(f){return new Promise((res,rej)=>{let r=tx('readwrite').put(f);r.onsuccess=()=>res();r.onerror=()=>rej(r.error)})}
+function deleteFile(id){return new Promise(res=>{let r=tx('readwrite').delete(id);r.onsuccess=()=>res()})}
+function sizeFmt(n){return n<1024? n+' B':n<1048576?(n/1024).toFixed(1)+' KB':(n/1048576).toFixed(1)+' MB'}
+function kind(f){return f.type.startsWith('image/')?'image':f.type.startsWith('video/')?'video':'other'}
+function icon(f){let k=kind(f);return k==='image'?'▧':k==='video'?'▷':f.type.includes('pdf')?'PDF':'◈'}
+function card(f){let url=URL.createObjectURL(f.blob),k=kind(f),media=k==='image'?`<img src="${url}" alt="">`:k==='video'?`<video src="${url}" muted></video>`:`<div class="file-icon">${icon(f)}</div>`;return `<article class="file-card glass"><div class="thumb">${media}</div><div class="file-info"><div class="file-name" title="${esc(f.name)}">${esc(f.name)}</div><div class="file-meta"><span>${sizeFmt(f.size)}</span><span>${new Date(f.added).toLocaleDateString()}</span></div><div class="file-actions"><button onclick="downloadFile('${f.id}')">↓ Save</button><button onclick="removeFile('${f.id}')">Delete</button></div></div></article>`}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function render(){files.forEach(f=>{});let total=files.length,media=files.filter(f=>kind(f)!=='other').length,bytes=files.reduce((a,f)=>a+f.size,0);$('#totalCount').textContent=total;$('#mediaCount').textContent=media;$('#storageCount').textContent=sizeFmt(bytes);let q=$('#search').value.toLowerCase();let filtered=files.filter(f=>f.name.toLowerCase().includes(q)&&(activeFilter==='all'||kind(f)===activeFilter));$('#libraryCount').textContent=filtered.length+' items';$('#libraryGrid').innerHTML=filtered.length?filtered.map(card).join(''):`<div class="empty"><b>Your library is waiting</b>Upload a file to see it here.</div>`;let recent=files.filter(f=>f.name.toLowerCase().includes(q)).slice(0,4);$('#recentGrid').innerHTML=recent.length?recent.map(card).join(''):`<div class="empty"><b>No files yet</b>Your latest uploads will appear here.</div>`}
+function downloadFile(id){let f=files.find(x=>x.id===id);if(!f)return;let u=URL.createObjectURL(f.blob),a=document.createElement('a');a.href=u;a.download=f.name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
+function ask(title,text,fn){$('#modalTitle').textContent=title;$('#modalText').textContent=text;pendingAction=fn;$('#modal').classList.add('show')}
+async function removeFile(id){let f=files.find(x=>x.id===id);ask('Delete file?',`Remove "${f.name}" from this browser library?`,async()=>{await deleteFile(id);await refresh();toast('File deleted')})}
+$('#cancelModal').onclick=()=>$('#modal').classList.remove('show');$('#confirmModal').onclick=()=>{if(pendingAction)pendingAction();$('#modal').classList.remove('show')};
+async function refresh(){files=await getAll();render()}
+async function addFiles(list){let arr=[...list];for(let f of arr){await saveFile({id:crypto.randomUUID(),name:f.name,type:f.type||'application/octet-stream',size:f.size,added:Date.now(),blob:f})}await refresh();toast(arr.length+' file(s) added');navigate('library')}
+function navigate(p){$$('.page').forEach(x=>x.classList.remove('active'));$('#page-'+p).classList.add('active');$$('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===p));window.scrollTo({top:0,behavior:'smooth'})}
+$$('.nav button').forEach(b=>b.onclick=()=>navigate(b.dataset.page));$$('[data-go]').forEach(b=>b.onclick=()=>navigate(b.dataset.go));
+function pick(){navigate('upload');$('#fileInput').click()}
+$('#topUpload').onclick=pick;$('#heroUpload').onclick=pick;$('#libraryUpload').onclick=pick;$('#browseBtn').onclick=()=>$('#fileInput').click();
+$('#fileInput').onchange=e=>{if(e.target.files.length)addFiles(e.target.files);e.target.value=''};
+$('#dropZone').ondragover=e=>{e.preventDefault();$('#dropZone').style.background='#a78bfa22'};$('#dropZone').ondragleave=()=>$('#dropZone').style.background='';$('#dropZone').ondrop=e=>{e.preventDefault();$('#dropZone').style.background='';if(e.dataTransfer.files.length)addFiles(e.dataTransfer.files)};
+$$('.filter').forEach(b=>b.onclick=()=>{activeFilter=b.dataset.filter;$$('.filter').forEach(x=>x.classList.toggle('active',x===b));render()});$('#search').oninput=render;
+$('#exportBtn').onclick=()=>{let data=files.map(({id,name,type,size,added})=>({id,name,type,size,added}));let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));a.download='allstore-library.json';a.click()};
+$('#clearBtn').onclick=()=>ask('Clear your library?','All locally stored files will be permanently deleted.',async()=>{for(let f of files)await deleteFile(f.id);await refresh();toast('Library cleared')});
+$('#themeBtn').onclick=()=>{document.body.style.filter=document.body.style.filter?'':'saturate(1.25)';toast('Display effect toggled')};
+$('#accentPicker').oninput=e=>document.documentElement.style.setProperty('--accent',e.target.value);
+$('#cornerStyle').onchange=e=>document.documentElement.style.setProperty('--radius',e.target.value);
+$('#glassRange').oninput=e=>document.documentElement.style.setProperty('--panel',`rgba(255,255,255,${e.target.value/100})`);
+$('#saveDesign').onclick=()=>{let order=$$('#blocks .preview-block').map(x=>x.dataset.block);localStorage.setItem('allstore_order',JSON.stringify(order));localStorage.setItem('allstore_accent',$('#accentPicker').value);localStorage.setItem('allstore_radius',$('#cornerStyle').value);localStorage.setItem('allstore_glass',$('#glassRange').value);toast('Workspace design saved')};
+let drag=null;$('#blocks').addEventListener('dragstart',e=>{let b=e.target.closest('.preview-block');if(!b)return;drag=b;b.classList.add('dragging')});$('#blocks').addEventListener('dragend',()=>{if(drag)drag.classList.remove('dragging');drag=null});$('#blocks').addEventListener('dragover',e=>{e.preventDefault();let target=e.target.closest('.preview-block');if(target&&drag&&target!==drag){let r=target.getBoundingClientRect();$('#blocks').insertBefore(drag,e.clientY<r.top+r.height/2?target:target.nextSibling)}});
+$('#workspaceName').onchange=e=>{$('.profile b').textContent=e.target.value;toast('Workspace name updated')};
+(async()=>{await openDB();await refresh();let order=JSON.parse(localStorage.getItem('allstore_order')||'[]');order.forEach(k=>{let el=$(`[data-block="${k}"]`);if(el)$('#blocks').appendChild(el)});let accent=localStorage.getItem('allstore_accent');if(accent){$('#accentPicker').value=accent;document.documentElement.style.setProperty('--accent',accent)}let radius=localStorage.getItem('allstore_radius');if(radius){$('#cornerStyle').value=radius;document.documentElement.style.setProperty('--radius',radius)}let glass=localStorage.getItem('allstore_glass');if(glass){$('#glassRange').value=glass;document.documentElement.style.setProperty('--panel',`rgba(255,255,255,${glass/100})`)}})();
+</script>
+</body>
+</html>
