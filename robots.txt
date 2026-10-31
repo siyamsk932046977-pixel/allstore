@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://allstore.pages.dev/sitemap.xml

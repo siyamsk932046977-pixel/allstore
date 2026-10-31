@@ -4,7 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#090812">
-<title>Allstore V4.8.1 — Supabase Connection Fix</title>
+<meta name="description" content="Allstore — explore photos and videos publicly shared by the owner.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://allstore.pages.dev/">
+<title>Allstore — Public Media Gallery</title>
 <style>
 :root{--bg:#090812;--panel:rgba(255,255,255,.075);--line:rgba(255,255,255,.13);--text:#f7f5ff;--muted:#a7a2ba;--accent:#a78bfa;--accent2:#6d5dfc;--radius:22px}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#29204c 0,transparent 38%),radial-gradient(ellipse at 95% 30%,#1d1640 0,transparent 34%),var(--bg);color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
@@ -57,17 +60,18 @@ body.visitor-mode .app{display:none!important}body:not(.visitor-mode) #visitorVi
 .visitor-view{min-height:100vh;background:radial-gradient(ellipse at 15% 0%,#29204c 0,transparent 48%),#090812;color:#f7f5ff;padding:0 18px 24px;font-family:inherit}
 .visitor-header{max-width:1100px;margin:auto;height:76px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff18}
 .visitor-brand{font-size:23px;font-weight:800;letter-spacing:-1px}.visitor-logo{display:inline-grid;place-items:center;width:34px;height:34px;margin-right:8px;border-radius:12px;background:linear-gradient(135deg,#a78bfa,#6d5dfc)}
-.visitor-tag{font-size:10px;letter-spacing:2px;color:#c4b5fd;border:1px solid #a78bfa55;padding:7px 10px;border-radius:99px}
+.visitor-menu{position:relative}.visitor-menu-btn{width:42px;height:42px;border-radius:13px;border:1px solid #ffffff30;background:#ffffff0b;color:white;font-size:24px;line-height:1}.visitor-menu-pop{display:none;position:absolute;right:0;top:50px;z-index:40;min-width:170px;padding:8px;background:#19142c;border:1px solid #ffffff28;border-radius:14px;box-shadow:0 12px 35px #0008}.visitor-menu-pop.open{display:block}.visitor-menu-pop button{width:100%;text-align:left;padding:11px;border:0;border-radius:9px;background:transparent;color:white}.visitor-menu-pop button:hover{background:#ffffff15}.admin-login-back{position:fixed;inset:0;z-index:100;background:#05040be8;display:none;place-items:center;padding:18px}.admin-login-back.open{display:grid}.admin-login-card{width:min(410px,100%);padding:23px;border:1px solid #ffffff28;border-radius:22px;background:#19142c;box-shadow:0 20px 60px #0009}.admin-login-card h2{margin:0 0 6px}.admin-login-card p{color:#aaa4bd;font-size:13px}.admin-login-card label{display:block;margin:12px 0 5px;color:#c8c1dc;font-size:12px}.admin-login-card input{width:100%;padding:12px;border-radius:11px;border:1px solid #ffffff2c;background:#ffffff0b;color:white}.admin-login-actions{display:flex;gap:9px;margin-top:16px}.admin-login-actions button{flex:1;padding:11px;border-radius:11px}.visitor-tag{font-size:10px;letter-spacing:2px;color:#c4b5fd;border:1px solid #a78bfa55;padding:7px 10px;border-radius:99px}
 .visitor-main{max-width:1100px;margin:0 auto}.visitor-hero{padding:54px 0 36px}.visitor-hero .eyebrow{color:#c4b5fd;font-size:11px;letter-spacing:2px}.visitor-hero h1{font-size:clamp(32px,6vw,54px);margin:12px 0}.visitor-hero p,.visitor-section-head small{color:#aaa4bd}.visitor-section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:10px 0 14px}.visitor-section-head h2{margin:0 0 5px}.visitor-grid .cloud-card{background:#ffffff08}.visitor-footer{max-width:1100px;margin:50px auto 0;padding-top:18px;border-top:1px solid #ffffff18;color:#aaa4bd;font-size:12px;display:flex;justify-content:space-between;align-items:center}.visitor-footer button{background:transparent;border:1px solid #ffffff30;color:#c4b5fd;border-radius:9px;padding:8px 12px;font-size:11px}
 </style>
 </head>
 <body class="visitor-mode">
 <section id="visitorView" class="visitor-view">
-  <header class="visitor-header"><div class="visitor-brand"><span class="visitor-logo">A</span> allstore<span style="color:#a78bfa">.</span></div><span class="visitor-tag">PUBLIC GALLERY</span></header>
+  <header class="visitor-header"><div class="visitor-brand"><span class="visitor-logo">A</span> allstore<span style="color:#a78bfa">.</span></div><div style="display:flex;align-items:center;gap:12px"><span class="visitor-tag">PUBLIC GALLERY</span><div class="visitor-menu"><button class="visitor-menu-btn" id="visitorMenuButton" aria-label="Open menu" aria-expanded="false">⋮</button><div class="visitor-menu-pop" id="visitorMenuPop"><button type="button" id="openAdminLogin">Admin Login</button></div></div></div></header>
   <main class="visitor-main"><div class="visitor-hero"><div class="eyebrow">WELCOME TO ALLSTORE</div><h1>Discover and explore.</h1><p>Photos and videos shared publicly by Allstore.</p></div>
   <div class="visitor-section-head"><div><h2>Public Gallery</h2><small>Only files selected by the owner appear here.</small></div><button class="secondary" id="visitorRefresh" type="button">↻ Refresh</button></div>
   <div id="visitorStatus" class="cloud-status">Loading public files…</div><div id="visitorGrid" class="cloud-grid visitor-grid"></div></main>
-  <footer class="visitor-footer">Allstore · Public viewing only <button type="button" id="visitorAdminAccess">Admin access</button></footer>
+  <footer class="visitor-footer">Allstore · Public viewing only</footer>
+<div class="admin-login-back" id="adminLoginBack" role="dialog" aria-modal="true" aria-labelledby="adminLoginTitle"><div class="admin-login-card"><h2 id="adminLoginTitle">Admin Login</h2><p>Sign in with the owner account to manage Allstore.</p><label for="visitorLoginEmail">Email</label><input id="visitorLoginEmail" type="email" autocomplete="username" placeholder="Admin email"><label for="visitorLoginPassword">Password</label><input id="visitorLoginPassword" type="password" autocomplete="current-password" placeholder="Password"><div class="cloud-status" id="visitorLoginStatus" aria-live="polite"></div><div class="admin-login-actions"><button class="secondary" type="button" id="cancelAdminLogin">Cancel</button><button class="primary" type="button" id="submitAdminLogin">Login</button></div></div></div>
 </section>
 <div class="app">
 <aside class="sidebar glass">
@@ -613,6 +617,7 @@ renderCustom();
  const PROJECT_URL='https://fmgtfvkrtpcrvrsvqbgu.supabase.co';
  const PUBLISHABLE_KEY='sb_publishable_HpSD8IJzM856Spj1Erts2Q_Fo6Cd3Eb';
  const BUCKET='allstore-media';
+ const ADMIN_USER_ID='42c23a8a-9474-4f15-95d4-ec1dc1bc1965';
  let client=null, currentUser=null, publicFiles=[];
  const status=(id,msg)=>{const el=$(id);if(el)el.textContent=msg};
  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -652,25 +657,29 @@ renderCustom();
      if(btn){btn.disabled=false;btn.textContent='Test connection';}
    }
  }
+ function isAdminUser(user){return !!user && user.id===ADMIN_USER_ID;}
  function renderAccessView(){
-   document.body.classList.toggle('visitor-mode',!currentUser);
-   if(currentUser){$('#visitorView').setAttribute('aria-hidden','true');}
-   else{$('#visitorView').removeAttribute('aria-hidden');}
+   const admin=isAdminUser(currentUser);
+   document.body.classList.toggle('visitor-mode',!admin);
+   if(admin){$('#visitorView').setAttribute('aria-hidden','true');}else{$('#visitorView').removeAttribute('aria-hidden');}
  }
  function updateAuth(){
    renderAccessView();
-   status('#v48AuthStatus',currentUser?'Signed in as '+currentUser.email:'Not signed in.');
-   $('#v48Login').disabled=!!currentUser;$('#v48Logout').disabled=!currentUser;
-   $('#v48Upload').disabled=!currentUser;$('#v48LoadAdmin').disabled=!currentUser;
+   const admin=isAdminUser(currentUser);
+   status('#v48AuthStatus',admin?'Signed in as '+currentUser.email:'Not signed in.');
+   $('#v48Login').disabled=admin;$('#v48Logout').disabled=!admin;
+   $('#v48Upload').disabled=!admin;$('#v48LoadAdmin').disabled=!admin;
  }
  async function login(){
-   try{const c=getClient();status('#v48AuthStatus','Signing in…');
-     const email=$('#v48Email').value.trim(),password=$('#v48Password').value;
+   const email=$('#visitorLoginEmail').value.trim(),password=$('#visitorLoginPassword').value;
+   status('#visitorLoginStatus','Signing in…');
+   try{const c=getClient();
      if(!email||!password)throw new Error('Enter your Admin email and password.');
      const {data,error}=await c.auth.signInWithPassword({email,password});if(error)throw error;
-     currentUser=data.user;$('#v48Password').value='';updateAuth();await loadAdmin();await loadPublic();
+     if(data.user?.id!==ADMIN_USER_ID){await c.auth.signOut();currentUser=null;throw new Error('This account is not authorized as the Allstore owner.');}
+     currentUser=data.user;$('#visitorLoginPassword').value='';$('#adminLoginBack').classList.remove('open');$('#visitorMenuPop').classList.remove('open');updateAuth();await loadAdmin();await loadPublic();
      status('#v48AuthStatus','Admin signed in: '+currentUser.email);
-   }catch(e){status('#v48AuthStatus','Login failed: '+(e.message||e));}
+   }catch(e){currentUser=null;updateAuth();status('#visitorLoginStatus','Login failed: '+(e.message||e));}
  }
  async function logout(){try{if(!client)return;const {error}=await client.auth.signOut();if(error)throw error;currentUser=null;updateAuth();$('#v48AdminGrid').innerHTML='';status('#v48AuthStatus','Signed out.');await loadPublic();}catch(e){status('#v48AuthStatus','Logout error: '+e.message)}}
  function fileCard(row,isAdmin){
@@ -711,7 +720,7 @@ renderCustom();
    }catch(e){status('#v48PublicStatus','Could not load public files: '+e.message);}
  }
  async function loadAdmin(){
-   if(!client||!currentUser){status('#v48UploadStatus','Admin login required.');return}
+   if(!client||!isAdminUser(currentUser)){status('#v48UploadStatus','Admin login required.');return}
    status('#v48UploadStatus','Loading Admin files…');
    try{const {data,error}=await client.from('media_files').select('*').order('created_at',{ascending:false}).limit(200);if(error)throw error;
      $('#v48AdminGrid').innerHTML=data?.length?data.map(x=>fileCard(x,true)).join(''):'<div class="empty">No cloud files uploaded yet.</div>';
@@ -719,7 +728,7 @@ renderCustom();
    }catch(e){status('#v48UploadStatus','Could not load Admin files: '+e.message);}
  }
  async function upload(){
-   try{const c=getClient();if(!currentUser)throw new Error('Sign in with your Admin account first.');
+   try{const c=getClient();if(!isAdminUser(currentUser))throw new Error('Admin login required.');
      const files=[...($('#v48CloudFiles').files||[])];if(!files.length)throw new Error('Choose at least one file.');
      const folder=$('#v48CloudFolder').value.trim().slice(0,60)||'My Files';
      const isPublic=$('#v48Visibility').value==='true';
@@ -743,10 +752,12 @@ renderCustom();
    }catch(e){alert('Download failed: '+e.message)}
  }
  async function changeVisibility(id,wasPublic){
+   if(!isAdminUser(currentUser)){alert('Admin login required.');return}
    try{const {error}=await getClient().from('media_files').update({is_public:!wasPublic}).eq('id',id);if(error)throw error;await loadAdmin();await loadPublic();}
    catch(e){alert('Could not change visibility: '+e.message)}
  }
  async function deleteCloud(id,path){
+   if(!isAdminUser(currentUser)){alert('Admin login required.');return}
    if(!confirm('Delete this cloud file permanently?'))return;
    try{const c=getClient();const {error:dbErr}=await c.from('media_files').delete().eq('id',id);if(dbErr)throw dbErr;const {error:stErr}=await c.storage.from(BUCKET).remove([path]);if(stErr)throw stErr;await loadAdmin();await loadPublic();}
    catch(e){alert('Delete failed: '+e.message)}
@@ -757,12 +768,17 @@ renderCustom();
    const x=e.target.closest('[data-cloud-delete]');if(x){deleteCloud(x.dataset.cloudDelete,x.dataset.path);return}
  });
  $('#visitorRefresh').addEventListener('click',loadPublic);
- $('#visitorAdminAccess').addEventListener('click',()=>{document.body.classList.remove('visitor-mode');document.querySelector('[data-page="settings"]')?.click();document.querySelector('#v48Email')?.scrollIntoView({behavior:'smooth',block:'center'});});
+ $('#visitorMenuButton').addEventListener('click',()=>{const pop=$('#visitorMenuPop');pop.classList.toggle('open');$('#visitorMenuButton').setAttribute('aria-expanded',pop.classList.contains('open')?'true':'false');});
+ $('#openAdminLogin').addEventListener('click',()=>{$('#visitorMenuPop').classList.remove('open');$('#adminLoginBack').classList.add('open');$('#visitorLoginEmail').focus();});
+ $('#cancelAdminLogin').addEventListener('click',()=>{$('#adminLoginBack').classList.remove('open');$('#visitorLoginStatus').textContent='';});
+ $('#submitAdminLogin').addEventListener('click',login);
+ $('#visitorLoginPassword').addEventListener('keydown',e=>{if(e.key==='Enter')login()});
+ $('#adminLoginBack').addEventListener('click',e=>{if(e.target===$('#adminLoginBack'))$('#adminLoginBack').classList.remove('open');});
  $('#v48Connect').addEventListener('click',connect);$('#v48Login').addEventListener('click',login);$('#v48Logout').addEventListener('click',logout);
  $('#v48Upload').addEventListener('click',upload);$('#v48LoadAdmin').addEventListener('click',loadAdmin);$('#v48RefreshPublic').addEventListener('click',loadPublic);
  $('#v48ShowKey').addEventListener('click',()=>{$('#v48PublishableKey').type=$('#v48PublishableKey').type==='password'?'text':'password'});
  $('#v48Password').addEventListener('keydown',e=>{if(e.key==='Enter')login()});
- try{getClient().auth.onAuthStateChange((_event,session)=>{currentUser=session?.user||null;updateAuth();if(currentUser){setTimeout(loadAdmin,0)}else{$('#v48AdminGrid').innerHTML=''}});connect()}catch(e){status('#v48ConnectionStatus',e.message)}
+ try{getClient().auth.onAuthStateChange(async(_event,session)=>{const user=session?.user||null;if(user&&!isAdminUser(user)){await getClient().auth.signOut();currentUser=null;}else{currentUser=user;}updateAuth();if(isAdminUser(currentUser)){setTimeout(loadAdmin,0)}else{$('#v48AdminGrid').innerHTML=''}});connect()}catch(e){status('#v48ConnectionStatus',e.message)}
  updateAuth();
 })();
 </script>
