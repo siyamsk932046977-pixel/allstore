@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#090812">
-<title>Allstore — Your Space</title>
+<title>Allstore V4.8.1 — Supabase Connection Fix</title>
 <style>
 :root{--bg:#090812;--panel:rgba(255,255,255,.075);--line:rgba(255,255,255,.13);--text:#f7f5ff;--muted:#a7a2ba;--accent:#a78bfa;--accent2:#6d5dfc;--radius:22px}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#29204c 0,transparent 38%),radial-gradient(ellipse at 95% 30%,#1d1640 0,transparent 34%),var(--bg);color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
@@ -17,14 +17,58 @@ main{min-width:0;padding:8px 10px 30px}.topbar{display:flex;align-items:center;g
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:26px}.stat{padding:17px 19px;border-radius:19px}.stat .muted{color:var(--muted);font-size:12px}.stat strong{display:block;font-size:25px;margin-top:4px;letter-spacing:-.7px}.stat .symbol{float:right;color:#c4b5fd;font-size:20px}
 .section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:22px 0 14px}.section-head h2{font-size:17px;margin:0;letter-spacing:-.3px}.section-head small{color:var(--muted)}.filters{display:flex;gap:7px;flex-wrap:wrap}.filter{border:1px solid var(--line);background:#ffffff08;color:var(--muted);padding:7px 12px;border-radius:999px;font-size:12px}.filter.active{background:#a78bfa25;color:#fff;border-color:#a78bfa66}
 .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.file-card{border-radius:19px;overflow:hidden;min-width:0;transition:.25s;animation:rise .5s both}.file-card:hover{transform:translateY(-4px);border-color:#c4b5fd55}.thumb{height:145px;background:linear-gradient(135deg,#292044,#17132b);display:grid;place-items:center;overflow:hidden;position:relative}.thumb img,.thumb video{width:100%;height:100%;object-fit:cover}.file-icon{font-size:38px;filter:drop-shadow(0 8px 15px #0007)}.file-info{padding:12px}.file-name{font-size:13px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.file-meta{font-size:11px;color:var(--muted);margin-top:4px;display:flex;justify-content:space-between}.file-actions{display:flex;gap:6px;margin-top:10px}.file-actions button{flex:1;padding:7px;border-radius:9px;border:1px solid var(--line);background:#ffffff09;font-size:11px}.empty{grid-column:1/-1;padding:42px 15px;text-align:center;color:var(--muted);border:1px dashed #ffffff2b;border-radius:18px}.empty b{display:block;color:white;margin-bottom:5px}
-.page{display:none}.page.active{display:block}.upload-zone{border:1px dashed #b9a4ff66;background:#a78bfa0b;border-radius:22px;padding:38px 20px;text-align:center}.upload-zone .big{font-size:38px}.upload-zone h2{margin:8px 0 4px}.upload-zone p{color:var(--muted);margin:0 0 17px}.setting-card{padding:20px;border-radius:20px;margin-bottom:13px}.setting-card h3{margin:0 0 5px}.setting-card p{color:var(--muted);font-size:13px;margin:0 0 15px}.setting-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 0;border-top:1px solid var(--line)}.setting-row input[type=color]{width:44px;height:32px;border:0;background:none}.switch{accent-color:#a78bfa;width:18px;height:18px}.customizer{display:grid;grid-template-columns:1fr 270px;gap:14px}.preview{border-radius:22px;padding:20px;min-height:360px}.preview-block{padding:16px;border:1px solid var(--line);border-radius:15px;margin:9px 0;background:#ffffff09;cursor:grab}.preview-block.dragging{opacity:.4}.custom-panel{border-radius:22px;padding:18px}.custom-panel label{display:block;font-size:12px;color:var(--muted);margin:12px 0 5px}.custom-panel input,.custom-panel select{width:100%;background:#ffffff0c;color:white;border:1px solid var(--line);padding:10px;border-radius:10px}.custom-panel select option{background:#17132b}.toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,20px);background:#29213f;border:1px solid #ffffff2a;padding:11px 17px;border-radius:14px;opacity:0;pointer-events:none;transition:.3s;z-index:20}.toast.show{opacity:1;transform:translate(-50%,0)}.modal-back{position:fixed;inset:0;background:#05040bd9;display:none;place-items:center;padding:20px;z-index:30}.modal-back.show{display:grid}.modal{width:min(440px,100%);padding:22px;border-radius:22px}.modal h2{margin:0 0 6px}.modal p{color:var(--muted);font-size:13px}.modal input{width:100%;padding:12px;background:#ffffff0b;color:white;border:1px solid var(--line);border-radius:12px;margin:8px 0 14px}
+.page{display:none}.page.active{display:block}.upload-zone{border:1px dashed #b9a4ff66;background:#a78bfa0b;border-radius:22px;padding:38px 20px;text-align:center}.upload-zone .big{font-size:38px}.upload-zone h2{margin:8px 0 4px}.upload-zone p{color:var(--muted);margin:0 0 17px}.setting-card{padding:20px;border-radius:20px;margin-bottom:13px}.setting-card h3{margin:0 0 5px}.setting-card p{color:var(--muted);font-size:13px;margin:0 0 15px}.setting-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 0;border-top:1px solid var(--line)}.setting-row input[type=color]{width:44px;height:32px;border:0;background:none}.switch{accent-color:#a78bfa;width:18px;height:18px}.customizer{display:grid;grid-template-columns:1fr 270px;gap:14px}.preview{border-radius:22px;padding:20px;min-height:360px}.preview-block{padding:16px;border:1px solid var(--line);border-radius:15px;margin:9px 0;background:#ffffff09;cursor:grab}.preview-block.dragging{opacity:.4}.preview-block{display:flex;align-items:center;justify-content:space-between;gap:8px}.move-controls{display:flex;gap:5px;flex-shrink:0}.move-controls button{padding:5px 10px;min-width:34px}.customizer{grid-template-columns:1fr 1fr}.custom-panel{min-width:0}.custom-panel{border-radius:22px;padding:18px}.custom-panel label{display:block;font-size:12px;color:var(--muted);margin:12px 0 5px}.custom-panel input,.custom-panel select{width:100%;background:#ffffff0c;color:white;border:1px solid var(--line);padding:10px;border-radius:10px}.custom-panel select option{background:#17132b}.toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,20px);background:#29213f;border:1px solid #ffffff2a;padding:11px 17px;border-radius:14px;opacity:0;pointer-events:none;transition:.3s;z-index:20}.toast.show{opacity:1;transform:translate(-50%,0)}.modal-back{position:fixed;inset:0;background:#05040bd9;display:none;place-items:center;padding:20px;z-index:30}.modal-back.show{display:grid}.modal{width:min(440px,100%);padding:22px;border-radius:22px}.modal h2{margin:0 0 6px}.modal p{color:var(--muted);font-size:13px}.modal input{width:100%;padding:12px;background:#ffffff0b;color:white;border:1px solid var(--line);border-radius:12px;margin:8px 0 14px}
 @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:1050px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:760px){.app{display:block;padding:10px}.sidebar{position:fixed;z-index:15;top:auto;bottom:9px;left:9px;right:9px;width:auto;height:auto;padding:8px;border-radius:20px;flex-direction:row;justify-content:space-around}.brand,.nav-label,.side-bottom{display:none}.nav{flex-direction:row;width:100%;justify-content:space-around;gap:2px}.nav button{flex:1;justify-content:center;flex-direction:column;gap:2px;padding:7px 2px;font-size:10px}.nav .ico{font-size:17px}.profile{display:none}main{padding:8px 4px 100px}.topbar{margin:5px 0 18px}.mobile-brand{display:block}.search{max-width:none}.search input{padding:11px 10px 11px 34px;font-size:12px}.search span{left:10px;top:7px}.top-actions .icon-btn{display:none}.hero{padding:22px 19px}.stats{gap:8px}.stat{padding:13px}.stat strong{font-size:20px}.stat .muted{font-size:10px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.thumb{height:120px}.customizer{grid-template-columns:1fr}.custom-panel{order:-1}}
+@media(max-width:760px){.app{display:block;padding:10px}.sidebar{position:fixed;z-index:15;top:auto;bottom:9px;left:9px;right:9px;width:auto;height:auto;padding:8px;border-radius:20px;flex-direction:row;justify-content:space-around}.brand,.nav-label,.side-bottom{display:none}.nav{flex-direction:row;width:100%;justify-content:space-around;gap:2px}.nav button{flex:1;justify-content:center;flex-direction:column;gap:2px;padding:7px 2px;font-size:10px}.nav .ico{font-size:17px}.profile{display:none}main{padding:8px 4px 100px}.topbar{margin:5px 0 18px}.mobile-brand{display:block}.search{max-width:none}.search input{padding:11px 10px 11px 34px;font-size:12px}.search span{left:10px;top:7px}.top-actions .icon-btn{display:none}.hero{padding:22px 19px}.stats{gap:8px}.stat{padding:13px}.stat strong{font-size:20px}.stat .muted{font-size:10px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.thumb{height:120px}.customizer{grid-template-columns:1fr}.custom-panel{order:initial}}
 @media(max-width:380px){.grid{grid-template-columns:1fr 1fr}.file-info{padding:9px}.stats{grid-template-columns:1fr 1fr}.stats .stat:last-child{display:none}}
 </style>
+<style>
+/* Allstore V4 additive styles */
+:root{--accent:#a78bfa}
+.v4-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.v4-toolbar button,.v4-toolbar select,.v4-toolbar input{border:1px solid var(--line);background:#ffffff0b;color:var(--text);padding:9px 12px;border-radius:12px;max-width:100%}
+.v4-toolbar select option{background:#17132b;color:white}
+.v4-help{font-size:12px;color:var(--muted);margin:7px 0 12px}
+.v4-check{position:absolute;top:9px;left:9px;z-index:2;width:18px;height:18px;accent-color:#a78bfa}
+.file-card{position:relative}
+.v4-star{position:absolute;right:9px;top:8px;z-index:2;background:#17132bcc;border:1px solid #ffffff44;color:white;border-radius:9px;padding:5px 9px}
+.v4-preview-back{position:fixed;inset:0;background:#05040bed;z-index:80;display:none;place-items:center;padding:14px}
+.v4-preview-back.open{display:grid}
+.v4-preview-box{width:min(950px,100%);max-height:92vh;overflow:auto;background:#17132b;border:1px solid var(--line);border-radius:20px;padding:15px}
+.v4-preview-content{min-height:140px;display:grid;place-items:center;overflow:auto}
+.v4-preview-content img,.v4-preview-content video,.v4-preview-content iframe{max-width:100%;max-height:72vh}
+.v4-preview-content iframe{width:100%;height:70vh;border:0}
+.v4-custom-section{padding:15px;border:1px solid var(--line);border-radius:16px;background:#ffffff09;margin:12px 0;overflow:hidden}
+.v4-custom-section img,.v4-custom-section video{max-width:100%;max-height:360px;border-radius:12px}
+.v4-custom-row{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px;border:1px solid var(--line);border-radius:12px;margin:7px 0;background:#ffffff08}
+.v4-custom-row button{background:#ffffff0b;border:1px solid var(--line);color:white;border-radius:9px;padding:6px 9px}
+.v4-muted{font-size:11px;color:var(--muted)}
+@media(max-width:760px){.v4-toolbar>*{flex:1}.v4-custom-row{align-items:flex-start}}
+</style>
+<style>
+/* V4.8 Supabase cloud layer */
+.cloud-panel{padding:18px;border-radius:20px;margin:14px 0}.cloud-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.cloud-card{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#ffffff08;min-width:0}.cloud-card .thumb{height:135px}.cloud-card .file-info{padding:11px}.cloud-badge{display:inline-block;padding:3px 8px;border-radius:99px;background:#a78bfa22;color:#d8ccff;font-size:10px;margin-top:6px}.cloud-form{display:grid;grid-template-columns:1fr 1fr;gap:10px}.cloud-form label{font-size:12px;color:var(--muted);display:block;margin-bottom:5px}.cloud-form input,.cloud-form select{width:100%;padding:11px;border:1px solid var(--line);border-radius:11px;background:#ffffff0b;color:white}.cloud-form select option{background:#17132b}.cloud-status{font-size:12px;color:var(--muted);margin-top:8px}.cloud-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.cloud-actions button{padding:9px 12px}.cloud-divider{height:1px;background:var(--line);margin:15px 0}
+@media(max-width:760px){.cloud-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cloud-form{grid-template-columns:1fr}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+body.visitor-mode .app{display:none!important}body:not(.visitor-mode) #visitorView{display:none!important}
+.visitor-view{min-height:100vh;background:radial-gradient(ellipse at 15% 0%,#29204c 0,transparent 48%),#090812;color:#f7f5ff;padding:0 18px 24px;font-family:inherit}
+.visitor-header{max-width:1100px;margin:auto;height:76px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff18}
+.visitor-brand{font-size:23px;font-weight:800;letter-spacing:-1px}.visitor-logo{display:inline-grid;place-items:center;width:34px;height:34px;margin-right:8px;border-radius:12px;background:linear-gradient(135deg,#a78bfa,#6d5dfc)}
+.visitor-tag{font-size:10px;letter-spacing:2px;color:#c4b5fd;border:1px solid #a78bfa55;padding:7px 10px;border-radius:99px}
+.visitor-main{max-width:1100px;margin:0 auto}.visitor-hero{padding:54px 0 36px}.visitor-hero .eyebrow{color:#c4b5fd;font-size:11px;letter-spacing:2px}.visitor-hero h1{font-size:clamp(32px,6vw,54px);margin:12px 0}.visitor-hero p,.visitor-section-head small{color:#aaa4bd}.visitor-section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:10px 0 14px}.visitor-section-head h2{margin:0 0 5px}.visitor-grid .cloud-card{background:#ffffff08}.visitor-footer{max-width:1100px;margin:50px auto 0;padding-top:18px;border-top:1px solid #ffffff18;color:#aaa4bd;font-size:12px;display:flex;justify-content:space-between;align-items:center}.visitor-footer button{background:transparent;border:1px solid #ffffff30;color:#c4b5fd;border-radius:9px;padding:8px 12px;font-size:11px}
+</style>
 </head>
-<body>
+<body class="visitor-mode">
+<section id="visitorView" class="visitor-view">
+  <header class="visitor-header"><div class="visitor-brand"><span class="visitor-logo">A</span> allstore<span style="color:#a78bfa">.</span></div><span class="visitor-tag">PUBLIC GALLERY</span></header>
+  <main class="visitor-main"><div class="visitor-hero"><div class="eyebrow">WELCOME TO ALLSTORE</div><h1>Discover and explore.</h1><p>Photos and videos shared publicly by Allstore.</p></div>
+  <div class="visitor-section-head"><div><h2>Public Gallery</h2><small>Only files selected by the owner appear here.</small></div><button class="secondary" id="visitorRefresh" type="button">↻ Refresh</button></div>
+  <div id="visitorStatus" class="cloud-status">Loading public files…</div><div id="visitorGrid" class="cloud-grid visitor-grid"></div></main>
+  <footer class="visitor-footer">Allstore · Public viewing only <button type="button" id="visitorAdminAccess">Admin access</button></footer>
+</section>
 <div class="app">
 <aside class="sidebar glass">
   <div class="brand"><div class="logo">A</div> allstore<span style="color:#a78bfa">.</span></div>
@@ -56,27 +100,83 @@ main{min-width:0;padding:8px 10px 30px}.topbar{display:flex;align-items:center;g
       <div class="stat glass"><span class="symbol">▣</span><div class="muted">Images & videos</div><strong id="mediaCount">0</strong></div>
       <div class="stat glass"><span class="symbol">◈</span><div class="muted">Storage used</div><strong id="storageCount">0 MB</strong></div>
     </div>
-    <div id="home-recent" style="display:contents"><div class="section-head" id="home-recent-head"><div><h2>Recently added</h2><small>Your latest uploads</small></div><button class="secondary" data-go="library">View all ↗</button></div>
+    <div id="home-recent" style="display:contents"><div class="section-head" id="home-recent-head"><div><h2>Recently added</h2><small>Your latest public cloud uploads</small></div><button class="secondary" data-go="library">View all ↗</button></div>
     <div class="grid" id="recentGrid"></div></div><div class="setting-card glass" id="home-quick" style="margin-top:16px"><h3>Quick actions</h3><p>Manage your personal space in one tap.</p><button class="primary" id="quickUpload">＋ Upload new files</button></div>
+  <div id="v4HomeSections"></div>
   </section>
   <section class="page" id="page-library">
+    <div class="setting-card glass cloud-panel" id="v48CloudGallery">
+      <div class="section-head" style="margin-top:0"><div><h2>☁ Cloud Gallery</h2><small>Public files shared from Allstore</small></div><button class="secondary" type="button" id="v48RefreshPublic">↻ Refresh</button></div>
+      <div class="cloud-status" id="v48PublicStatus">Connect to the cloud to load public files.</div>
+      <div class="cloud-grid" id="v48PublicGrid"></div>
+    </div>
+    <div class="v4-toolbar">
+      <button type="button" id="v4SelectAll">Select all</button>
+      <button type="button" id="v4BulkDelete">Move selected to bin</button>
+      <button type="button" id="v4BinButton">Recycle bin</button>
+      <button type="button" id="v4FavFilter">Favorites: OFF</button>
+    </div>
+    <p class="v4-help">V4 additions: multi-select, favorites, file preview and recycle bin. Existing V3 navigation and appearance remain.</p>
+
     <div class="section-head"><div><h2>My Library</h2><small>All your files, organized</small></div><button class="primary" id="libraryUpload">＋ Upload</button></div>
+    <div class="setting-card glass" style="margin:10px 0 14px;padding:14px">
+      <h3>Folders</h3><p>একটি Folder তৈরি করে অনেকগুলো ছবি/ফাইল সেখানে রাখো।</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <select id="v45FolderFilter" aria-label="Choose folder" style="flex:1;min-width:150px;background:#ffffff0c;color:var(--text);border:1px solid var(--line);padding:11px;border-radius:10px"><option value="all">All folders</option></select>
+        <button type="button" class="secondary" id="v45NewFolder">＋ New folder</button>
+        <button type="button" class="secondary" id="v45MoveSelected">Move selected</button>
+      </div>
+      <small id="v45FolderHint" style="display:block;color:var(--muted);margin-top:8px">Select files using the checkboxes, then choose Move selected.</small>
+    </div>
+    <div id="v46FolderGrid" class="grid" style="margin:10px 0 16px"></div>
     <div class="section-head"><div class="filters"><button class="filter active" data-filter="all">All files</button><button class="filter" data-filter="image">Images</button><button class="filter" data-filter="video">Videos</button><button class="filter" data-filter="other">Other</button></div><small id="libraryCount">0 items</small></div>
     <div class="grid" id="libraryGrid"></div>
   </section>
   <section class="page" id="page-upload">
     <div class="section-head"><div><h2>Upload files</h2><small>Add content to your personal library</small></div></div>
+    <div class="setting-card glass" style="margin-bottom:14px">
+      <h3>File details (optional)</h3>
+      <label for="v4DisplayName">Display name / ছবির নাম</label>
+      <input id="v4DisplayName" type="text" placeholder="যেমন: Black T-shirt" maxlength="100" style="width:100%;margin:6px 0 12px;padding:12px;border-radius:12px;background:#ffffff0b;color:var(--text);border:1px solid var(--line)">
+      <label for="v4Description">Description / ছবির বিবরণ</label>
+      <textarea id="v4Description" rows="2" placeholder="ছবিটি সম্পর্কে কিছু লিখুন..." maxlength="500" style="width:100%;margin:6px 0 12px;padding:12px;border-radius:12px;background:#ffffff0b;color:var(--text);border:1px solid var(--line)"></textarea>
+      <label for="v45UploadFolder">Save in folder / Folder</label>
+      <select id="v45UploadFolder" style="width:100%;margin:6px 0 12px;padding:12px;border-radius:12px;background:#ffffff0b;color:var(--text);border:1px solid var(--line)"><option value="">No folder</option></select>
+      <label for="v4Tags">Tags / কীওয়ার্ড (কমা দিয়ে আলাদা করুন)</label>
+      <input id="v4Tags" type="text" placeholder="যেমন: shirt, black, fashion" maxlength="250" style="width:100%;margin:6px 0;padding:12px;border-radius:12px;background:#ffffff0b;color:var(--text);border:1px solid var(--line)">
+      <p class="v4-help">এই তথ্য Upload করা ফাইলের সঙ্গে সেভ হবে এবং Search দিয়ে খুঁজে পাওয়া যাবে। একসঙ্গে একাধিক ফাইল দিলে একই তথ্য সব ফাইলে যুক্ত হবে।</p>
+    </div>
     <div class="upload-zone glass" id="dropZone"><div class="big">⇧</div><h2>Drop files here</h2><p>or browse from your device. Images, videos, documents and more.</p><button class="primary" id="browseBtn">Choose files</button><input type="file" id="fileInput" multiple hidden></div>
-    <div class="setting-card glass" style="margin-top:15px"><h3>Supported content</h3><p>Images · Videos · Audio · PDF · Documents · Archives · Other files</p><small style="color:var(--muted)">This starter version stores files in this browser on this device.</small></div>
+    <div class="setting-card glass" style="margin-top:15px"><h3>Supported content</h3><p>Images · Videos · Audio · PDF · Documents · Archives · Other files</p><small style="color:var(--muted)">Local upload stays on this device. Use Settings → Supabase Cloud Connection to upload files to your cloud bucket.</small></div>
   </section>
   <section class="page" id="page-customize">
-    <div class="section-head"><div><h2>Customize workspace</h2><small>Make your space feel like yours</small></div><button class="primary" id="saveDesign">Save changes</button></div>
+    <div class="section-head"><div><h2>Customize workspace</h2><small>Make your space feel like yours</small></div><button class="primary" id="saveDesign">Save changes</button>
+<div class="setting-card glass" style="margin-top:15px">
+  <h3>V4 Custom Section Builder</h3>
+  <p>Add your own section to the Home page. You can edit, reorder or remove it later.</p>
+  <div class="v4-toolbar">
+    <select id="v4NewType" aria-label="Section type">
+      <option value="text">Text Section</option><option value="image">Image Section</option>
+      <option value="video">Video Section</option><option value="button">Button Section</option>
+    </select>
+    <button type="button" class="primary" id="v4AddSection">＋ Add section</button>
+    <button type="button" id="v4AddImage">＋ Image Section</button>
+    <button type="button" id="v4AddButton">＋ Button Section</button>
+    <button type="button" id="v4Undo">Undo</button>
+    <button type="button" id="v4Redo">Redo</button>
+    <button type="button" class="secondary" id="v4ExportLayout">Export Layout</button>
+    <button type="button" class="secondary" id="v4ImportLayout">Import Layout</button>
+    <input type="file" id="v4LayoutFile" accept="application/json,.json" hidden>
+  </div>
+  <div id="v4SectionList"></div>
+</div>
+</div>
     <div class="customizer">
-      <div class="preview glass"><div class="eyebrow">LIVE PREVIEW · DRAG TO REORDER</div><h2 style="margin:6px 0 14px">Your workspace</h2><div id="blocks">
-        <div class="preview-block" draggable="true" data-block="welcome">✦ &nbsp; Welcome banner</div>
-        <div class="preview-block" draggable="true" data-block="stats">▦ &nbsp; Storage overview</div>
-        <div class="preview-block" draggable="true" data-block="recent">◷ &nbsp; Recent files</div>
-        <div class="preview-block" draggable="true" data-block="quick">＋ &nbsp; Quick upload</div>
+      <div class="custom-panel glass" id="previewSectionsPanel"><h3 style="margin:0 0 6px">Preview Sections</h3><p style="font-size:12px;color:var(--muted);margin:0 0 12px">Move sections up or down using the arrows. You can also drag them.</p><div id="blocks">
+        <div class="preview-block" draggable="true" data-block="welcome"><span>✦ &nbsp; Welcome banner</span><span class="move-controls"><button type="button" class="secondary move-up" aria-label="Move up">↑</button> <button type="button" class="secondary move-down" aria-label="Move down">↓</button></span></div>
+        <div class="preview-block" draggable="true" data-block="stats"><span>▦ &nbsp; Storage overview</span><span class="move-controls"><button type="button" class="secondary move-up" aria-label="Move up">↑</button> <button type="button" class="secondary move-down" aria-label="Move down">↓</button></span></div>
+        <div class="preview-block" draggable="true" data-block="recent"><span>◷ &nbsp; Recent files</span><span class="move-controls"><button type="button" class="secondary move-up" aria-label="Move up">↑</button> <button type="button" class="secondary move-down" aria-label="Move down">↓</button></span></div>
+        <div class="preview-block" draggable="true" data-block="quick"><span>＋ &nbsp; Quick upload</span><span class="move-controls"><button type="button" class="secondary move-up" aria-label="Move up">↑</button> <button type="button" class="secondary move-down" aria-label="Move down">↓</button></span></div>
       </div></div>
       <div class="custom-panel glass"><h3 style="margin:0">Appearance</h3><label>Accent color</label><input type="color" id="accentPicker" value="#a78bfa"><label>Corner style</label><select id="cornerStyle"><option value="22px">Soft / Rounded</option><option value="12px">Compact</option><option value="30px">Extra rounded</option></select><label>Glass intensity</label><input type="range" id="glassRange" min="3" max="15" value="7" style="padding:0"><label>Text size</label><input type="range" id="textRange" min="13" max="19" value="15" style="padding:0"><label style="margin-top:16px">Show / hide home sections</label><div class="setting-row"><span>Welcome banner</span><input class="switch home-visibility" type="checkbox" data-target="welcome" checked></div><div class="setting-row"><span>Storage overview</span><input class="switch home-visibility" type="checkbox" data-target="stats" checked></div><div class="setting-row"><span>Recent files</span><input class="switch home-visibility" type="checkbox" data-target="recent" checked></div><div class="setting-row"><span>Quick actions</span><input class="switch home-visibility" type="checkbox" data-target="quick" checked></div><p style="font-size:11px;color:var(--muted);margin-top:14px">Drag sections to reorder them. Changes apply to Home and save on this device.</p></div>
     </div>
@@ -85,10 +185,50 @@ main{min-width:0;padding:8px 10px 30px}.topbar{display:flex;align-items:center;g
     <div class="section-head"><div><h2>Settings</h2><small>Manage your Allstore experience</small></div></div>
     <div class="setting-card glass"><h3>Workspace</h3><p>Personalize the name shown in your dashboard.</p><div class="setting-row"><span>Workspace name</span><input id="workspaceName" value="Personal library" style="max-width:180px;background:#ffffff0c;color:white;border:1px solid var(--line);padding:8px;border-radius:9px"></div><div class="setting-row"><span>Motion effects</span><input class="switch" type="checkbox" id="motionToggle" checked></div></div>
     <div class="setting-card glass"><h3>Data & privacy</h3><p>Your current demo library stays in this browser. Clearing browser data may remove locally saved files.</p><div class="setting-row"><span>Export library list</span><button class="secondary" id="exportBtn">Export JSON</button></div><div class="setting-row"><span>Delete all local files</span><button class="secondary" id="clearBtn" style="color:#fca5a5">Clear library</button></div></div>
-    <div class="setting-card glass"><h3>Cloud storage</h3><p>Cloud upload, secure admin accounts and public/private sharing will be connected in the deployment stage. This local prototype does not yet upload files to the internet.</p><span class="eyebrow">CLOUD CONNECTION · NOT CONFIGURED</span></div>
+    <div class="setting-card glass cloud-panel" id="v48CloudSettings">
+      <h3>☁ Supabase Cloud Connection</h3>
+      <p>Connect Allstore to your private Supabase bucket. The Publishable Key is intended for browser use; never put a Secret or service-role key here.</p>
+      <div class="cloud-form">
+        <div style="grid-column:1/-1"><label for="v48ProjectUrl">Project URL</label><input id="v48ProjectUrl" type="url" value="https://fmgtfvkrtpcrvrsvqbgu.supabase.co" autocomplete="url"></div>
+        <div style="grid-column:1/-1"><label for="v48PublishableKey">Publishable Key</label><input id="v48PublishableKey" type="password" value="sb_publishable_HpSD8IJzM856Spj1Erts2Q_Fo6Cd3Eb" autocomplete="off"></div>
+      </div>
+      <div class="cloud-actions"><button class="primary" type="button" id="v48Connect">Test connection</button><button class="secondary" type="button" id="v48ShowKey">Show key</button></div>
+      <div class="cloud-status" id="v48ConnectionStatus">Not tested yet.</div>
+      <div class="cloud-divider"></div>
+      <h3>Admin Login</h3><p>Sign in with the Admin email and password you created in Supabase. Public signups remain disabled.</p>
+      <div class="cloud-form">
+        <div><label for="v48Email">Admin Email</label><input id="v48Email" type="email" placeholder="Admin email" autocomplete="username"></div>
+        <div><label for="v48Password">Password</label><input id="v48Password" type="password" placeholder="Admin password" autocomplete="current-password"></div>
+      </div>
+      <div class="cloud-actions"><button class="primary" type="button" id="v48Login">Admin Login</button><button class="secondary" type="button" id="v48Logout">Logout</button></div>
+      <div class="cloud-status" id="v48AuthStatus">Not signed in.</div>
+      <div class="cloud-divider"></div>
+      <h3>Cloud Upload</h3><p>Only the signed-in Admin can upload. Choose whether each file should be visible in the public Cloud Gallery.</p>
+      <div class="cloud-form">
+        <div><label for="v48CloudFolder">Folder name</label><input id="v48CloudFolder" type="text" maxlength="60" placeholder="e.g. Photos"></div>
+        <div><label for="v48Visibility">Visibility</label><select id="v48Visibility"><option value="false">Private — Admin only</option><option value="true">Public — visitors can view</option></select></div>
+        <div style="grid-column:1/-1"><label for="v48CloudFiles">Choose files</label><input id="v48CloudFiles" type="file" multiple></div>
+      </div>
+      <div class="cloud-actions"><button class="primary" type="button" id="v48Upload">Upload to Cloud</button><button class="secondary" type="button" id="v48LoadAdmin">Load Admin Files</button></div>
+      <div class="cloud-status" id="v48UploadStatus">Cloud upload is available after Admin Login.</div>
+      <div class="cloud-divider"></div>
+      <h3>Cloud File Manager</h3><div class="cloud-grid" id="v48AdminGrid"></div>
+      <p class="cloud-status">Private bucket: allstore-media. Public files are exposed only through the database and Storage read policies. Browser-based download protection cannot prevent screenshots or screen recording.</p>
+    </div>
   </section>
 </main>
 </div>
+
+<div class="v4-preview-back" id="v4Preview">
+ <div class="v4-preview-box glass">
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px">
+   <b id="v4PreviewName">Preview</b><button class="secondary" type="button" id="v4ClosePreview">Close</button>
+  </div>
+  <div class="v4-preview-content" id="v4PreviewContent"></div>
+  <p class="v4-help">Preview controls do not provide complete copy protection. Screenshots, screen recording and browser tools cannot be fully blocked.</p>
+ </div>
+</div>
+
 <div class="toast" id="toast"></div>
 <div class="modal-back" id="modal"><div class="modal glass"><h2 id="modalTitle">Delete file?</h2><p id="modalText">This action cannot be undone.</p><div style="display:flex;gap:8px;justify-content:flex-end"><button class="secondary" id="cancelModal">Cancel</button><button class="primary" id="confirmModal">Confirm</button></div></div></div>
 <script>
@@ -125,10 +265,507 @@ $('#themeBtn').onclick=()=>{document.body.style.filter=document.body.style.filte
 $('#accentPicker').oninput=e=>document.documentElement.style.setProperty('--accent',e.target.value);
 $('#cornerStyle').onchange=e=>document.documentElement.style.setProperty('--radius',e.target.value);
 $('#glassRange').oninput=e=>document.documentElement.style.setProperty('--panel',`rgba(255,255,255,${e.target.value/100})`);
-function applyHomeLayout(){let map={welcome:$('#home-welcome'),stats:$('#home-stats'),recent:$('#home-recent'),quick:$('#home-quick')};let order=JSON.parse(localStorage.getItem('allstore_order')||'[]');order.forEach(k=>{if(map[k])$('#page-home').appendChild(map[k])});let hidden=JSON.parse(localStorage.getItem('allstore_hidden')||'[]');Object.entries(map).forEach(([k,el])=>{if(el)el.style.display=hidden.includes(k)?'none':''});$$('.home-visibility').forEach(c=>c.checked=!hidden.includes(c.dataset.target))}$$('.home-visibility').forEach(c=>c.onchange=()=>{let hidden=$$('.home-visibility').filter(x=>!x.checked).map(x=>x.dataset.target);localStorage.setItem('allstore_hidden',JSON.stringify(hidden));applyHomeLayout()});$('#textRange').oninput=e=>document.documentElement.style.setProperty('--base-size',e.target.value+'px');$('#quickUpload').onclick=pick;$('#saveDesign').onclick=()=>{let order=$$('#blocks .preview-block').map(x=>x.dataset.block);localStorage.setItem('allstore_order',JSON.stringify(order));localStorage.setItem('allstore_accent',$('#accentPicker').value);localStorage.setItem('allstore_radius',$('#cornerStyle').value);localStorage.setItem('allstore_glass',$('#glassRange').value);localStorage.setItem('allstore_text',$('#textRange').value);localStorage.setItem('allstore_hidden',JSON.stringify($$('.home-visibility').filter(x=>!x.checked).map(x=>x.dataset.target)));applyHomeLayout();toast('Workspace design saved')};
-let drag=null;$('#blocks').addEventListener('dragstart',e=>{let b=e.target.closest('.preview-block');if(!b)return;drag=b;b.classList.add('dragging')});$('#blocks').addEventListener('dragend',()=>{if(drag)drag.classList.remove('dragging');drag=null});$('#blocks').addEventListener('dragover',e=>{e.preventDefault();let target=e.target.closest('.preview-block');if(target&&drag&&target!==drag){let r=target.getBoundingClientRect();$('#blocks').insertBefore(drag,e.clientY<r.top+r.height/2?target:target.nextSibling)}});
+function applyHomeLayout(){let map={welcome:$('#home-welcome'),stats:$('#home-stats'),recent:$('#home-recent'),quick:$('#home-quick')};let saved=JSON.parse(localStorage.getItem('allstore_order')||'[]');let order=['welcome','stats','recent','quick'].filter(k=>!saved.includes(k)).concat(saved.filter(k=>map[k]));order.forEach(k=>{if(map[k])$('#page-home').appendChild(map[k])});let hidden=JSON.parse(localStorage.getItem('allstore_hidden')||'[]');Object.entries(map).forEach(([k,el])=>{if(el)el.style.display=hidden.includes(k)?'none':''});$$('.home-visibility').forEach(c=>c.checked=!hidden.includes(c.dataset.target));}$$('.home-visibility').forEach(c=>c.onchange=()=>{let hidden=$$('.home-visibility').filter(x=>!x.checked).map(x=>x.dataset.target);localStorage.setItem('allstore_hidden',JSON.stringify(hidden));applyHomeLayout()});$('#textRange').oninput=e=>document.documentElement.style.setProperty('--base-size',e.target.value+'px');$('#quickUpload').onclick=pick;$('#saveDesign').onclick=()=>{let order=$$('#blocks .preview-block').map(x=>x.dataset.block);localStorage.setItem('allstore_order',JSON.stringify(order));localStorage.setItem('allstore_accent',$('#accentPicker').value);localStorage.setItem('allstore_radius',$('#cornerStyle').value);localStorage.setItem('allstore_glass',$('#glassRange').value);localStorage.setItem('allstore_text',$('#textRange').value);localStorage.setItem('allstore_hidden',JSON.stringify($$('.home-visibility').filter(x=>!x.checked).map(x=>x.dataset.target)));applyHomeLayout();toast('Workspace design saved')};
+function saveSectionOrder(){let order=$$('#blocks .preview-block').map(x=>x.dataset.block);localStorage.setItem('allstore_order',JSON.stringify(order));toast('Section order updated');}
+$('#blocks').addEventListener('click',e=>{let row=e.target.closest('.preview-block');if(!row)return;let rows=$$('#blocks .preview-block');let i=rows.indexOf(row);if(e.target.closest('.move-up')&&i>0){$('#blocks').insertBefore(row,rows[i-1]);saveSectionOrder()}if(e.target.closest('.move-down')&&i<rows.length-1){$('#blocks').insertBefore(rows[i+1],row);saveSectionOrder()}});
+let drag=null;$('#blocks').addEventListener('dragstart',e=>{let b=e.target.closest('.preview-block');if(!b)return;drag=b;b.classList.add('dragging')});$('#blocks').addEventListener('dragend',()=>{if(drag)drag.classList.remove('dragging');drag=null;saveSectionOrder()});$('#blocks').addEventListener('dragover',e=>{e.preventDefault();let target=e.target.closest('.preview-block');if(target&&drag&&target!==drag){let r=target.getBoundingClientRect();$('#blocks').insertBefore(drag,e.clientY<r.top+r.height/2?target:target.nextSibling)}});
 $('#workspaceName').onchange=e=>{$('.profile b').textContent=e.target.value;toast('Workspace name updated')};
 (async()=>{await openDB();await refresh();let order=JSON.parse(localStorage.getItem('allstore_order')||'[]');order.forEach(k=>{let el=$(`[data-block="${k}"]`);if(el)$('#blocks').appendChild(el)});let accent=localStorage.getItem('allstore_accent');if(accent){$('#accentPicker').value=accent;document.documentElement.style.setProperty('--accent',accent)}let radius=localStorage.getItem('allstore_radius');if(radius){$('#cornerStyle').value=radius;document.documentElement.style.setProperty('--radius',radius)}let glass=localStorage.getItem('allstore_glass');if(glass){$('#glassRange').value=glass;document.documentElement.style.setProperty('--panel',`rgba(255,255,255,${glass/100})`)}let textSize=localStorage.getItem('allstore_text');if(textSize){$('#textRange').value=textSize;document.documentElement.style.setProperty('--base-size',textSize+'px')}applyHomeLayout()})();
+
+/* ================= ALLSTORE V4 ADD-ON LAYER =================
+   Built on top of V3. Existing V3 pages and controls are retained.
+   This single-file version remains browser-local; no cloud/admin backend.
+*/
+(function(){
+'use strict';
+const q=s=>document.querySelector(s), qa=s=>Array.from(document.querySelectorAll(s));
+const V4_BIN='allstore_v4_deleted_ids', V4_FAV='allstore_v4_favorites', V4_BLOCKS='allstore_v4_home_sections';
+let selected=new Set(), favorites=new Set(JSON.parse(localStorage.getItem(V4_FAV)||'[]'));
+let deleted=new Set(JSON.parse(localStorage.getItem(V4_BIN)||'[]'));
+let favoritesOnly=false, undoStack=[], redoStack=[];
+let customBlocks=JSON.parse(localStorage.getItem(V4_BLOCKS)||'[]');
+
+function saveSets(){
+ localStorage.setItem(V4_FAV,JSON.stringify([...favorites]));
+ localStorage.setItem(V4_BIN,JSON.stringify([...deleted]));
+}
+function snapshot(){
+ undoStack.push(JSON.stringify(customBlocks));
+ if(undoStack.length>25)undoStack.shift();
+ redoStack=[];
+}
+function safeUrl(value){
+ try{const u=new URL(value,location.href);return ['http:','https:'].includes(u.protocol)?u.href:null}catch(e){return null}
+}
+function renderCustom(){
+ const list=q('#v4SectionList'), home=q('#v4HomeSections');
+ if(!list||!home)return;
+ list.replaceChildren(); home.replaceChildren();
+ customBlocks.forEach((b,i)=>{
+  const row=document.createElement('div');row.className='v4-custom-row';
+  const info=document.createElement('div');
+  const label=document.createElement('b');label.textContent=b.type.toUpperCase();
+  const detail=document.createElement('div');detail.className='v4-muted';detail.textContent=b.text||b.url||'Custom section';
+  info.append(label,detail);
+  const actions=document.createElement('div');
+  [['Edit',()=>editBlock(i)],['↑',()=>moveBlock(i,-1)],['↓',()=>moveBlock(i,1)],['Delete',()=>deleteBlock(i)]].forEach(([t,fn])=>{const bt=document.createElement('button');bt.type='button';bt.textContent=t;bt.onclick=fn;actions.append(bt)});
+  row.append(info,actions);list.append(row);
+  const section=document.createElement('section');section.className='v4-custom-section glass';
+  if(b.type==='text'){const p=document.createElement('p');p.textContent=b.text;section.append(p)}
+  if(b.type==='image'){const u=safeUrl(b.url);if(u){const im=document.createElement('img');im.src=u;im.alt=b.text||'Custom image';im.loading='lazy';section.append(im)}}
+  if(b.type==='video'){const u=safeUrl(b.url);if(u){const v=document.createElement('video');v.src=u;v.controls=true;v.preload='metadata';v.setAttribute('controlsList','nodownload');section.append(v)}}
+  if(b.type==='button'){const bt=document.createElement('button');bt.className='primary';bt.type='button';bt.textContent=b.text||'Open link';bt.onclick=()=>{const u=safeUrl(b.url);if(u)window.open(u,'_blank','noopener,noreferrer')};section.append(bt)}
+  if(section.childNodes.length)home.append(section);
+ });
+}
+function persistBlocks(){localStorage.setItem(V4_BLOCKS,JSON.stringify(customBlocks));renderCustom()}
+function addBlock(typeOverride){
+ const type=typeOverride||q('#v4NewType').value;
+ let text='',url='';
+ if(type==='text'){text=prompt('Write the section text:')||'';if(!text.trim())return}
+ else if(type==='button'){text=prompt('Button label:')||'';url=prompt('Button URL (https://...):')||'';if(!text.trim()||!safeUrl(url)){alert('Please enter a label and a valid http/https link.');return}}
+ else {url=prompt('Paste an image/video URL (https://...):')||'';if(!safeUrl(url)){alert('Please enter a valid http/https URL.');return}text=prompt('Optional title:')||''}
+ snapshot();customBlocks.push({id:(crypto.randomUUID?crypto.randomUUID():String(Date.now()+Math.random())),type,text,url});persistBlocks();
+}
+function editBlock(i){
+ const b=customBlocks[i];if(!b)return;
+ const text=prompt('Edit text/title:',b.text||'');if(text===null)return;
+ let url=b.url||'';
+ if(b.type!=='text'){url=prompt('Edit URL:',url)||'';if(!safeUrl(url)){alert('Invalid URL.');return}}
+ snapshot();b.text=text;b.url=url;persistBlocks();
+}
+function deleteBlock(i){if(!confirm('Delete this custom section?'))return;snapshot();customBlocks.splice(i,1);persistBlocks()}
+function moveBlock(i,d){const j=i+d;if(j<0||j>=customBlocks.length)return;snapshot();[customBlocks[i],customBlocks[j]]=[customBlocks[j],customBlocks[i]];persistBlocks()}
+function undo(){if(!undoStack.length)return toast('Nothing to undo');redoStack.push(JSON.stringify(customBlocks));customBlocks=JSON.parse(undoStack.pop());persistBlocks()}
+function redo(){if(!redoStack.length)return toast('Nothing to redo');undoStack.push(JSON.stringify(customBlocks));customBlocks=JSON.parse(redoStack.pop());persistBlocks()}
+
+const oldGetAll=getAll;
+getAll=function(){return oldGetAll()};
+const oldRender=render;
+render=function(){
+ const visible=files.filter(f=>!deleted.has(f.id));
+ const total=visible.length, media=visible.filter(f=>kind(f)!=='other').length, bytes=visible.reduce((a,f)=>a+f.size,0);
+ q('#totalCount').textContent=total;q('#mediaCount').textContent=media;q('#storageCount').textContent=sizeFmt(bytes);
+ const term=q('#search').value.toLowerCase();
+ const matches=f=>f.name.toLowerCase().includes(term)&&!deleted.has(f.id)&&(!favoritesOnly||favorites.has(f.id));
+ const filtered=files.filter(f=>matches(f)&&(activeFilter==='all'||kind(f)===activeFilter));
+ q('#libraryCount').textContent=filtered.length+' items';
+ q('#libraryGrid').innerHTML=filtered.length?filtered.map(v4Card).join(''):'<div class="empty"><b>No matching files</b>Try another search or upload a file.</div>';
+ const recent=files.filter(matches).slice(0,4);
+ q('#recentGrid').innerHTML=recent.length?recent.map(v4Card).join(''):'<div class="empty"><b>No files yet</b>Your latest uploads will appear here.</div>';
+};
+function v4Card(f){
+ const k=kind(f),u=URL.createObjectURL(f.blob),fav=JSON.parse(localStorage.getItem('allstore_v4_favorites')||'[]').includes(f.id);
+ const media=k==='image'?`<img src="${u}" alt="">`:k==='video'?`<video src="${u}" muted></video>`:`<div class="file-icon">${icon(f)}</div>`;
+ return `<article class="file-card glass"><input class="v4-check" type="checkbox" aria-label="Select ${esc(f.name)}" ${repairSelected.has(f.id)?'checked':''} onchange="window.v4Select('${f.id}',this.checked)"><button type="button" class="v4-star" aria-label="Toggle favorite" onclick="window.v4Favorite('${f.id}')">${fav?'★':'☆'}</button><div class="thumb" role="button" tabindex="0" onclick="window.v4PreviewFile('${f.id}')">${media}</div><div class="file-info"><div class="file-name" title="${esc(f.name)}">${esc(f.name)}</div><div class="file-meta"><span>${sizeFmt(f.size)}</span><span>${new Date(f.added).toLocaleDateString()}</span></div><div class="file-actions"><button type="button" onclick="window.v4PreviewFile('${f.id}')">Preview</button><button type="button" onclick="removeFile('${f.id}')">Delete</button></div></div></article>`;
+}
+window.v4Select=(id,on)=>{on?selected.add(id):selected.delete(id)};
+window.v4Favorite=id=>{favorites.has(id)?favorites.delete(id):favorites.add(id);saveSets();render()};
+window.v4PreviewFile=id=>{
+ const f=files.find(x=>x.id===id);if(!f)return;
+ const host=q('#v4PreviewContent');host.replaceChildren();q('#v4PreviewName').textContent=f.name;
+ const url=URL.createObjectURL(f.blob);let el;
+ if(f.type.startsWith('image/')){el=document.createElement('img');el.src=url;el.alt=f.name}
+ else if(f.type.startsWith('video/')){el=document.createElement('video');el.src=url;el.controls=true;el.setAttribute('controlsList','nodownload')}
+ else if(f.type==='application/pdf'){el=document.createElement('iframe');el.src=url;el.title=f.name}
+ else {const p=document.createElement('p');p.textContent='Preview is not available for this file type.';host.append(p)}
+ if(el)host.append(el);
+ q('#v4Preview').classList.add('open');
+};
+function moveToBin(id){
+ const f=files.find(x=>x.id===id);if(!f)return;
+ deleted.add(id);saveSets();selected.delete(id);render();toast('Moved to Recycle bin');
+}
+const oldRemove=removeFile;
+removeFile=function(id){const f=files.find(x=>x.id===id);if(!f)return;ask('Move to Recycle bin?',`"${f.name}" can be restored from Recycle bin.`,()=>moveToBin(id))};
+async function bulkDelete(){
+ if(!selected.size)return toast('Select at least one file first');
+ if(!confirm(`Move ${selected.size} selected file(s) to Recycle bin?`))return;
+ [...selected].forEach(moveToBin);selected.clear();render();
+}
+async function showBin(){
+ const items=files.filter(f=>deleted.has(f.id));
+ if(!items.length)return toast('Recycle bin is empty');
+ const lines=items.map((f,i)=>`${i+1}. ${f.name}`).join('\n');
+ const answer=prompt('Recycle bin:\n'+lines+'\n\nType a file number to restore, or EMPTY to permanently delete all items.');
+ if(!answer)return;
+ if(answer.toUpperCase()==='EMPTY'){
+  if(confirm('Permanently delete all files in Recycle bin?')){for(const f of items)await deleteFile(f.id);items.forEach(f=>deleted.delete(f.id));saveSets();await refresh();toast('Recycle bin emptied')}
+  return;
+ }
+ const n=Number(answer)-1;
+ if(Number.isInteger(n)&&n>=0&&n<items.length){deleted.delete(items[n].id);saveSets();render();toast('File restored')}
+}
+q('#v4SelectAll').onclick=()=>{files.filter(f=>!deleted.has(f.id)).forEach(f=>selected.add(f.id));render()};
+q('#v4BulkDelete').onclick=bulkDelete;
+q('#v4BinButton').onclick=showBin;
+q('#v4FavFilter').onclick=e=>{favoritesOnly=!favoritesOnly;e.currentTarget.textContent='Favorites: '+(favoritesOnly?'ON':'OFF');render()};
+q('#v4AddSection').onclick=()=>addBlock();
+q('#v4AddImage').onclick=()=>addBlock('image');
+q('#v4AddButton').onclick=()=>addBlock('button');
+q('#v4Undo').onclick=undo;q('#v4Redo').onclick=redo;
+// Layout-only backup: custom sections, section order, appearance and visibility.
+// This does not include uploaded media files or library contents.
+function getLayoutBackup(){
+ const order=qa('#blocks .preview-block').map(x=>x.dataset.block);
+ return {
+  app:'allstore-layout',version:1,createdAt:new Date().toISOString(),
+  customBlocks:JSON.parse(JSON.stringify(customBlocks)),
+  order,
+  accent:q('#accentPicker')?.value||'#a78bfa',
+  radius:q('#cornerStyle')?.value||'22px',
+  glass:q('#glassRange')?.value||'7',
+  textSize:q('#textRange')?.value||'15',
+  hidden:qa('.home-visibility').filter(x=>!x.checked).map(x=>x.dataset.target)
+ };
+}
+q('#v4ExportLayout').onclick=()=>{
+ try{
+  const data=JSON.stringify(getLayoutBackup(),null,2);
+  const blob=new Blob([data],{type:'application/json'});
+  const url=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=url;a.download='allstore-layout-backup.json';document.body.append(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+  toast('Layout exported successfully');
+ }catch(err){console.error(err);toast('Layout export failed')}
+};
+q('#v4ImportLayout').onclick=()=>q('#v4LayoutFile').click();
+q('#v4LayoutFile').onchange=async e=>{
+ const file=e.target.files?.[0];if(!file)return;
+ try{
+  if(file.size>1024*1024)throw new Error('Layout file is too large');
+  const data=JSON.parse(await file.text());
+  if(data.app!=='allstore-layout'||data.version!==1||!Array.isArray(data.customBlocks)||!Array.isArray(data.order)||!Array.isArray(data.hidden))throw new Error('This is not a valid Allstore Layout backup');
+  const allowedTypes=['text','image','video','button'];
+  if(data.customBlocks.length>100||data.customBlocks.some(b=>!b||!allowedTypes.includes(b.type)||typeof b.text!=='string'||typeof b.url!=='string'))throw new Error('Layout data is invalid');
+  if(!confirm('Import this layout? Your current customization settings and sections will be replaced. Your uploaded library files will not be changed.'))return;
+  snapshot();
+  customBlocks=data.customBlocks.map(b=>({id:String(b.id||Date.now()+Math.random()),type:b.type,text:b.text.slice(0,5000),url:b.url.slice(0,2000)}));
+  persistBlocks();
+  const valid=['welcome','stats','recent','quick'];
+  const order=[...new Set(data.order.filter(k=>valid.includes(k)))];
+  localStorage.setItem('allstore_order',JSON.stringify(order));
+  localStorage.setItem('allstore_accent',/^#[0-9a-f]{6}$/i.test(data.accent)?data.accent:'#a78bfa');
+  localStorage.setItem('allstore_radius',['12px','22px','30px'].includes(data.radius)?data.radius:'22px');
+  localStorage.setItem('allstore_glass',String(Math.min(15,Math.max(3,Number(data.glass)||7))));
+  localStorage.setItem('allstore_text',String(Math.min(19,Math.max(13,Number(data.textSize)||15))));
+  localStorage.setItem('allstore_hidden',JSON.stringify(data.hidden.filter(k=>valid.includes(k))));
+  q('#accentPicker').value=localStorage.getItem('allstore_accent');
+  q('#cornerStyle').value=localStorage.getItem('allstore_radius');
+  q('#glassRange').value=localStorage.getItem('allstore_glass');
+  q('#textRange').value=localStorage.getItem('allstore_text');
+  document.documentElement.style.setProperty('--accent',q('#accentPicker').value);
+  document.documentElement.style.setProperty('--radius',q('#cornerStyle').value);
+  document.documentElement.style.setProperty('--panel',`rgba(255,255,255,${Number(q('#glassRange').value)/100})`);
+  document.documentElement.style.setProperty('--base-size',q('#textRange').value+'px');
+  applyHomeLayout();renderCustom();toast('Layout imported successfully');
+ }catch(err){console.error(err);alert(err.message||'Could not import layout')}
+ finally{e.target.value=''}
+};
+
+q('#v4ClosePreview').onclick=()=>{q('#v4Preview').classList.remove('open');q('#v4PreviewContent').replaceChildren()};
+q('#v4Preview').addEventListener('click',e=>{if(e.target===q('#v4Preview'))q('#v4ClosePreview').click()});
+
+// Keep V3's original delete-all action, but include hidden recycle-bin items in the clear.
+const oldClear=q('#clearBtn').onclick;
+q('#clearBtn').onclick=()=>ask('Clear your library?','All local files, including Recycle bin items, will be permanently deleted.',async()=>{
+ for(const f of files)await deleteFile(f.id);
+ deleted.clear();favorites.clear();selected.clear();saveSets();await refresh();toast('Library cleared');
+});
+renderCustom();
+refresh=async function(){files=await getAll();render()};
+renderCustom();
+})();
+
 </script>
+
+<script>
+/* V4.1 search + upload metadata repair */
+(function(){
+ 'use strict';
+ const $=s=>document.querySelector(s);
+ const deletedKey='allstore_v4_deleted_ids';
+ let deletedIds=new Set(JSON.parse(localStorage.getItem(deletedKey)||'[]'));
+ let repairSelected=new Set();
+ function text(v){return String(v||'').trim()}
+ function escV4(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+ function safeSearch(f,term){
+   const hay=[f.name,f.displayName,f.description,Array.isArray(f.tags)?f.tags.join(' '):f.tags].join(' ').toLocaleLowerCase();
+   return hay.includes(term);
+ }
+ // Rebuild rendering so the search field always searches filename + user metadata.
+ window.render=function(){
+   try{
+    deletedIds=new Set(JSON.parse(localStorage.getItem(deletedKey)||'[]'));
+    const live=files.filter(f=>!deletedIds.has(f.id));
+    const favoriteIds=new Set(JSON.parse(localStorage.getItem('allstore_v4_favorites')||'[]'));
+    const visible=live.filter(f=>!window.v4FavoritesOnly||favoriteIds.has(f.id));
+    const total=visible.length, media=visible.filter(f=>kind(f)!=='other').length, bytes=visible.reduce((a,f)=>a+f.size,0);
+    $('#totalCount').textContent=total;$('#mediaCount').textContent=media;$('#storageCount').textContent=sizeFmt(bytes);
+    const term=text($('#search').value).toLocaleLowerCase();
+    const folderChoice=$('#v45FolderFilter')?.value||'all';
+    const list=visible.filter(f=>safeSearch(f,term)&&(activeFilter==='all'||kind(f)===activeFilter)&&(folderChoice==='all'?(true):(f.folder||'')===folderChoice));
+    $('#libraryCount').textContent=list.length+' items';
+    $('#libraryGrid').innerHTML=list.length?list.map(v4RepairCard).join(''):'<div class="empty"><b>No matching files</b>Try the file name, display name, description or tags.</div>';
+    const recent=visible.filter(f=>safeSearch(f,term)).slice(0,4);
+    $('#recentGrid').innerHTML=recent.length?recent.map(v4RepairCard).join(''):'<div class="empty"><b>No files yet</b>Your latest uploads will appear here.</div>';
+   }catch(err){console.error('V4 render error',err);toast('Search display error. Please reload this page.')}
+ };
+ function v4RepairCard(f){
+   const k=kind(f),u=URL.createObjectURL(f.blob),fav=JSON.parse(localStorage.getItem('allstore_v4_favorites')||'[]').includes(f.id);
+   const media=k==='image'?`<img src="${u}" alt="${escV4(f.displayName||f.name)}">`:k==='video'?`<video src="${u}" muted></video>`:`<div class="file-icon">${icon(f)}</div>`;
+   const title=f.displayName||f.name;
+   const desc=f.description?`<div class="v4-muted">${escV4(f.description)}</div>`:'';
+   const tags=Array.isArray(f.tags)?f.tags.join(', '):text(f.tags);
+   const tagLine=tags?`<div class="v4-muted"># ${escV4(tags)}</div>`:'';
+   const folderLine=f.folder?`<div class="v4-muted">📁 ${escV4(f.folder)}</div>`:'';
+   return `<article class="file-card glass"><input class="v4-check" type="checkbox" aria-label="Select file" ${repairSelected.has(f.id)?'checked':''} onchange="window.v4Select('${f.id}',this.checked)"><button type="button" class="v4-star" onclick="window.v4Favorite('${f.id}')">${fav?'★':'☆'}</button><div class="thumb" role="button" tabindex="0" onclick="window.v4PreviewFile('${f.id}')">${media}</div><div class="file-info"><div class="file-name" title="${escV4(f.name)}">${escV4(title)}</div><div class="file-meta"><span>${sizeFmt(f.size)}</span><span>${new Date(f.added).toLocaleDateString()}</span></div>${desc}${tagLine}${folderLine}<div class="file-actions"><button type="button" onclick="window.v4PreviewFile('${f.id}')">Preview</button><button type="button" onclick="removeFile('${f.id}')">Delete</button></div></div></article>`;
+ }
+ window.v4Select=(id,on)=>{on?repairSelected.add(id):repairSelected.delete(id)};
+ // Ensure the search event calls the latest renderer (input + clear).
+ $('#search').addEventListener('input',()=>window.render());
+ $('#search').addEventListener('search',()=>window.render());
+ // Save optional display name/description/tags with each uploaded file.
+ window.addFiles=async function(fileList){
+   const items=[...fileList];
+   const displayName=text($('#v4DisplayName').value);
+   const description=text($('#v4Description').value);
+   const tags=text($('#v4Tags').value).split(',').map(x=>x.trim()).filter(Boolean);
+   const folder=text($('#v45UploadFolder')?.value)||((text($('#v45FolderFilter')?.value)!=='all')?text($('#v45FolderFilter').value):'');
+   try{
+    for(let i=0;i<items.length;i++){
+      const f=items[i];
+      await saveFile({id:(crypto.randomUUID?crypto.randomUUID():String(Date.now()+i)),name:f.name,displayName:displayName||(items.length===1?f.name:f.name),description,tags,folder,type:f.type||'application/octet-stream',size:f.size,added:Date.now(),blob:f});
+    }
+    $('#v4DisplayName').value='';$('#v4Description').value='';$('#v4Tags').value='';
+    await refresh();toast(items.length+' file(s) uploaded with details');navigate('library');
+   }catch(err){console.error('Upload failed',err);toast('Upload failed: '+(err.message||'storage error'))}
+ };
+ // Expose favorite state for the renderer, while retaining the existing Set.
+ window.v4FavoritesOnly=false;
+ const favButton=$('#v4FavFilter');
+ if(favButton){favButton.addEventListener('click',()=>{window.v4FavoritesOnly=favButton.textContent.includes('ON');window.render()})}
+
+ // V4.5 local folder manager. Folder names and file assignments stay on this device.
+ const folderKey='allstore_v45_folders';
+ function folderNames(){try{return JSON.parse(localStorage.getItem(folderKey)||'[]').filter(x=>typeof x==='string')}catch(e){return []}}
+ function syncFolderMenus(){
+   const names=folderNames(), filter=$('#v45FolderFilter'), upload=$('#v45UploadFolder');
+   if(filter){const keep=filter.value||'all';filter.innerHTML='<option value="all">All folders</option>'+names.map(n=>`<option value="${escV4(n)}">📁 ${escV4(n)}</option>`).join('');filter.value=names.includes(keep)?keep:'all'}
+   if(upload){const keep=upload.value||'';upload.innerHTML='<option value="">No folder</option>'+names.map(n=>`<option value="${escV4(n)}">📁 ${escV4(n)}</option>`).join('');upload.value=names.includes(keep)?keep:''}
+ }
+ $('#v45NewFolder').onclick=()=>{const raw=prompt('নতুন Folder-এর নাম লিখুন:');if(!raw)return;const name=raw.trim().slice(0,60);if(!name)return;if(folderNames().some(x=>x.toLowerCase()===name.toLowerCase()))return toast('এই Folder আগে থেকেই আছে');const a=folderNames();a.push(name);localStorage.setItem(folderKey,JSON.stringify(a));syncFolderMenus();$('#v45FolderFilter').value=name;$('#v45UploadFolder').value=name;render();toast('Folder created — new uploads will go here')};
+ $('#v45FolderFilter').onchange=()=>{const selected=$('#v45FolderFilter').value;if(selected!=='all')$('#v45UploadFolder').value=selected;render()};
+ $('#v45UploadFolder').onchange=()=>{const selected=$('#v45UploadFolder').value;if(selected)$('#v45FolderFilter').value=selected};
+ $('#v45MoveSelected').onclick=async()=>{
+   if(!repairSelected.size)return toast('আগে checkbox দিয়ে ফাইল Select করো');
+   const names=folderNames();if(!names.length)return toast('আগে New folder তৈরি করো');
+   const choice=prompt('কোন Folder-এ রাখবে?\n'+names.map((n,i)=>(i+1)+'. '+n).join('\n')+'\n\nFolder-এর নম্বর লিখো:');
+   if(!choice)return;const idx=Number(choice)-1;if(!Number.isInteger(idx)||idx<0||idx>=names.length)return toast('সঠিক Folder নম্বর দাও');
+   const target=names[idx];try{for(const id of [...repairSelected]){const f=files.find(x=>x.id===id);if(f){f.folder=target;await saveFile(f)}}repairSelected.clear();await refresh();syncFolderMenus();$('#v45FolderFilter').value=target;render();toast('Selected files moved to '+target)}catch(err){console.error(err);toast('Could not move files')}
+ };
+ syncFolderMenus();
+ // V4.7: real folder browser. Clicking a folder opens a dedicated view of its contents.
+ const folderGrid=$('#v46FolderGrid');
+ window.openAllFolders=()=>{$('#v45FolderFilter').value='all';$('#v45UploadFolder').value='';render()};
+ window.openFolder=(name)=>{$('#v45FolderFilter').value=name;$('#v45UploadFolder').value=name;render()};
+ const previousFolderRender=window.render;
+ window.render=function(){
+   try{
+     const term=text($('#search').value).toLocaleLowerCase();
+     const deletedSet=new Set(JSON.parse(localStorage.getItem(deletedKey)||'[]'));
+     const favSet=new Set(JSON.parse(localStorage.getItem('allstore_v4_favorites')||'[]'));
+     const live=files.filter(f=>!deletedSet.has(f.id));
+     const visible=live.filter(f=>!window.v4FavoritesOnly||favSet.has(f.id));
+     const total=visible.length, media=visible.filter(f=>kind(f)!=='other').length, bytes=visible.reduce((a,f)=>a+f.size,0);
+     $('#totalCount').textContent=total;$('#mediaCount').textContent=media;$('#storageCount').textContent=sizeFmt(bytes);
+     const selectedFolder=$('#v45FolderFilter').value||'all';
+     const matches=f=>safeSearch(f,term)&&(activeFilter==='all'||kind(f)===activeFilter);
+     if(selectedFolder==='all'){
+       const names=folderNames();
+       folderGrid.style.display=names.length?'grid':'none';
+       folderGrid.innerHTML=names.map(name=>{
+         const count=visible.filter(f=>f.folder===name).length;
+         return `<button type="button" class="setting-card glass" style="text-align:left;cursor:pointer;border:1px solid var(--line);color:var(--text)" onclick="window.openFolder(${JSON.stringify(name).replace(/</g,'\\u003c')})"><div style="font-size:30px">📁</div><b>${escV4(name)}</b><div class="v4-muted">${count} file(s)</div></button>`;
+       }).join('');
+     }else{
+       folderGrid.style.display='block';
+       folderGrid.innerHTML=`<button type="button" class="secondary" onclick="window.openAllFolders()">← All folders</button><h3 style="margin:12px 0">📁 ${escV4(selectedFolder)}</h3>`;
+     }
+     const list=visible.filter(f=>matches(f)&&(selectedFolder==='all'? !f.folder : f.folder===selectedFolder));
+     $('#libraryCount').textContent=list.length+' items';
+     $('#libraryGrid').innerHTML=list.length?list.map(v4RepairCard).join(''):'<div class="empty"><b>'+(selectedFolder==='all'?'No files outside folders':'This folder is empty')+'</b>Upload files into this folder to see them here.</div>';
+     const recent=visible.filter(matches).slice(0,4);
+     $('#recentGrid').innerHTML=recent.length?recent.map(v4RepairCard).join(''):'<div class="empty"><b>No files yet</b>Your latest uploads will appear here.</div>';
+   }catch(err){console.error('Folder view error',err);if(previousFolderRender)previousFolderRender()}
+ };
+ // Re-read the local database after the patch has loaded, then apply search.
+ if(typeof refresh==='function')refresh().then(()=>window.render()).catch(err=>console.error(err));
+})();
+</script>
+
+
+<script>
+/* ALLSTORE V4.8.1 — verified Supabase connection check. Local V4.7 library remains intact. */
+(function(){
+ 'use strict';
+ const $=s=>document.querySelector(s);
+ const PROJECT_URL='https://fmgtfvkrtpcrvrsvqbgu.supabase.co';
+ const PUBLISHABLE_KEY='sb_publishable_HpSD8IJzM856Spj1Erts2Q_Fo6Cd3Eb';
+ const BUCKET='allstore-media';
+ let client=null, currentUser=null, publicFiles=[];
+ const status=(id,msg)=>{const el=$(id);if(el)el.textContent=msg};
+ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const fmt=n=>{n=Number(n)||0;return n<1024?n+' B':n<1048576?(n/1024).toFixed(1)+' KB':(n/1048576).toFixed(1)+' MB'};
+ function getClient(){
+   if(!window.supabase?.createClient)throw new Error('Supabase library did not load. Check your internet connection and reload.');
+   const url=($('#v48ProjectUrl').value||PROJECT_URL).trim();
+   const key=($('#v48PublishableKey').value||PUBLISHABLE_KEY).trim();
+   if(!/^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(url))throw new Error('Project URL format is not valid.');
+   if(!key.startsWith('sb_publishable_'))throw new Error('Use the Publishable Key only. Do not use a Secret key.');
+   if(!client)client=window.supabase.createClient(url,key,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+   return client;
+ }
+ async function connect(){
+   const btn=$('#v48Connect');
+   if(btn){btn.disabled=true;btn.textContent='Testing connection…';}
+   status('#v48ConnectionStatus','Checking Supabase connection…');
+   try{
+     const c=getClient();
+     // A real PostgREST request: getSession alone does not prove the project/API is reachable.
+     const {data:rows,error:dbError}=await c.from('media_files').select('id').eq('is_public',true).limit(1);
+     if(dbError){
+       const msg=dbError.message||String(dbError);
+       if(dbError.code==='42P01'||/relation .* does not exist/i.test(msg)) throw new Error('Supabase reached, but media_files table was not found. Check Database → Tables.');
+       if(dbError.code==='42501'||/permission denied|row-level security/i.test(msg)) throw new Error('Supabase reached, but the public SELECT policy/RLS setup needs checking: '+msg);
+       throw new Error('Supabase API test failed: '+msg);
+     }
+     const {data:sessionData,error:sessionError}=await c.auth.getSession();
+     if(sessionError)throw new Error('Database connected, but Auth check failed: '+sessionError.message);
+     currentUser=sessionData.session?.user||null;
+     updateAuth();
+     status('#v48ConnectionStatus','Connected and verified ✓ Database API responded. Public file query works ('+(rows||[]).length+' sample row(s)).');
+     await loadPublic();
+   }catch(e){
+     status('#v48ConnectionStatus','Connection test failed: '+(e.message||e));
+   }finally{
+     if(btn){btn.disabled=false;btn.textContent='Test connection';}
+   }
+ }
+ function renderAccessView(){
+   document.body.classList.toggle('visitor-mode',!currentUser);
+   if(currentUser){$('#visitorView').setAttribute('aria-hidden','true');}
+   else{$('#visitorView').removeAttribute('aria-hidden');}
+ }
+ function updateAuth(){
+   renderAccessView();
+   status('#v48AuthStatus',currentUser?'Signed in as '+currentUser.email:'Not signed in.');
+   $('#v48Login').disabled=!!currentUser;$('#v48Logout').disabled=!currentUser;
+   $('#v48Upload').disabled=!currentUser;$('#v48LoadAdmin').disabled=!currentUser;
+ }
+ async function login(){
+   try{const c=getClient();status('#v48AuthStatus','Signing in…');
+     const email=$('#v48Email').value.trim(),password=$('#v48Password').value;
+     if(!email||!password)throw new Error('Enter your Admin email and password.');
+     const {data,error}=await c.auth.signInWithPassword({email,password});if(error)throw error;
+     currentUser=data.user;$('#v48Password').value='';updateAuth();await loadAdmin();await loadPublic();
+     status('#v48AuthStatus','Admin signed in: '+currentUser.email);
+   }catch(e){status('#v48AuthStatus','Login failed: '+(e.message||e));}
+ }
+ async function logout(){try{if(!client)return;const {error}=await client.auth.signOut();if(error)throw error;currentUser=null;updateAuth();$('#v48AdminGrid').innerHTML='';status('#v48AuthStatus','Signed out.');await loadPublic();}catch(e){status('#v48AuthStatus','Logout error: '+e.message)}}
+ function fileCard(row,isAdmin){
+   const path=esc(row.storage_path),title=esc(row.title||row.storage_path.split('/').pop()),folder=esc(row.folder_name||'No folder');
+   const type=row.file_type||'',media=type.startsWith('image/')?'<div class="thumb" data-cloud-thumb="'+path+'"><div class="file-icon">▧</div></div>':type.startsWith('video/')?'<div class="thumb" data-cloud-thumb="'+path+'"><div class="file-icon">▷</div></div>':'<div class="thumb"><div class="file-icon">◈</div></div>';
+   return `<article class="cloud-card">${media}<div class="file-info"><div class="file-name" title="${title}">${title}</div><div class="file-meta"><span>${fmt(row.file_size)}</span><span>${folder}</span></div><span class="cloud-badge">${row.is_public?'PUBLIC':'PRIVATE'}</span><div class="file-actions"><button type="button" data-cloud-download="${path}">↓ Download</button>${isAdmin?`<button type="button" data-cloud-visibility="${esc(row.id)}" data-public="${row.is_public?'true':'false'}">${row.is_public?'Make private':'Make public'}</button><button type="button" data-cloud-delete="${esc(row.id)}" data-path="${path}">Delete</button>`:''}</div></div></article>`;
+ }
+ async function addCloudThumbnails(rows){
+   for(const row of rows||[]){
+     if(!String(row.file_type||'').startsWith('image/')&&!String(row.file_type||'').startsWith('video/'))continue;
+     const els=[...document.querySelectorAll('[data-cloud-thumb]')].filter(x=>x.dataset.cloudThumb===row.storage_path);if(!els.length)continue;
+     try{const {data,error}=await getClient().storage.from(BUCKET).createSignedUrl(row.storage_path,3600);if(error)continue;
+       const markup=String(row.file_type||'').startsWith('image/')?'<img alt="" src="'+esc(data.signedUrl)+'" style="width:100%;height:100%;object-fit:cover">':'<video muted playsinline src="'+esc(data.signedUrl)+'" style="width:100%;height:100%;object-fit:cover"></video>';
+       els.forEach(el=>el.innerHTML=markup);
+     }catch(_){}
+   }
+ }
+ async function loadPublic(){
+   if(!client){$('#v48PublicGrid').innerHTML='';status('#v48PublicStatus','Connect to the cloud to load public files.');return}
+   status('#v48PublicStatus','Loading public files…');
+   try{const {data,error}=await client.from('media_files').select('id,title,folder_name,storage_path,file_type,file_size,is_public,created_at').eq('is_public',true).order('created_at',{ascending:false}).limit(100);if(error)throw error;
+     publicFiles=data||[];$('#v48PublicGrid').innerHTML=publicFiles.length?publicFiles.map(x=>fileCard(x,false)).join(''):'<div class="empty">No public files have been shared yet.</div>';
+     $('#visitorGrid').innerHTML=publicFiles.length?publicFiles.map(x=>fileCard(x,false)).join(''):'<div class="empty">No public files have been shared yet.</div>';status('#visitorStatus',publicFiles.length+' public file(s) available.');
+     // Mirror public cloud files into the Home dashboard, not only the Library tab.
+     const homeRecent=$('#recentGrid');
+     if(homeRecent){
+       homeRecent.classList.add('cloud-grid');
+       homeRecent.innerHTML=publicFiles.length?publicFiles.slice(0,4).map(x=>fileCard(x,false)).join(''):'<div class="empty"><b>No public cloud files yet</b>Files you mark Public will appear here.</div>';
+     }
+     const cloudTotal=publicFiles.length;
+     const cloudMedia=publicFiles.filter(x=>String(x.file_type||'').startsWith('image/')||String(x.file_type||'').startsWith('video/')).length;
+     const cloudBytes=publicFiles.reduce((sum,x)=>sum+(Number(x.file_size)||0),0);
+     if($('#totalCount'))$('#totalCount').textContent=String(cloudTotal);
+     if($('#mediaCount'))$('#mediaCount').textContent=String(cloudMedia);
+     if($('#storageCount'))$('#storageCount').textContent=fmt(cloudBytes);
+     status('#v48PublicStatus',publicFiles.length+' public file(s) loaded.');await addCloudThumbnails(publicFiles);
+     await addCloudThumbnails(publicFiles.slice(0,4));
+   }catch(e){status('#v48PublicStatus','Could not load public files: '+e.message);}
+ }
+ async function loadAdmin(){
+   if(!client||!currentUser){status('#v48UploadStatus','Admin login required.');return}
+   status('#v48UploadStatus','Loading Admin files…');
+   try{const {data,error}=await client.from('media_files').select('*').order('created_at',{ascending:false}).limit(200);if(error)throw error;
+     $('#v48AdminGrid').innerHTML=data?.length?data.map(x=>fileCard(x,true)).join(''):'<div class="empty">No cloud files uploaded yet.</div>';
+     status('#v48UploadStatus',(data||[]).length+' Admin file(s) loaded.');await addCloudThumbnails(data||[]);
+   }catch(e){status('#v48UploadStatus','Could not load Admin files: '+e.message);}
+ }
+ async function upload(){
+   try{const c=getClient();if(!currentUser)throw new Error('Sign in with your Admin account first.');
+     const files=[...($('#v48CloudFiles').files||[])];if(!files.length)throw new Error('Choose at least one file.');
+     const folder=$('#v48CloudFolder').value.trim().slice(0,60)||'My Files';
+     const isPublic=$('#v48Visibility').value==='true';
+     for(let i=0;i<files.length;i++){
+       const f=files[i];
+       const safeName=f.name.replace(/[^a-zA-Z0-9._-]/g,'_').slice(-120)||'file';
+       const uid=(crypto.randomUUID?crypto.randomUUID():('id-'+Date.now()+'-'+Math.random().toString(36).slice(2)));
+       const path=`${currentUser.id}/${uid}-${safeName}`;
+       status('#v48UploadStatus',`Uploading ${i+1} of ${files.length}: ${f.name}`);
+       const {error:upErr}=await c.storage.from(BUCKET).upload(path,f,{contentType:f.type||'application/octet-stream',upsert:false});
+       if(upErr)throw upErr;
+       const {error:dbErr}=await c.from('media_files').insert({title:f.name,description:'',tags:[],folder_name:folder,storage_path:path,file_type:f.type||'application/octet-stream',file_size:f.size,is_public:isPublic,created_by:currentUser.id});
+       if(dbErr){await c.storage.from(BUCKET).remove([path]);throw dbErr;}
+     }
+     $('#v48CloudFiles').value='';await loadAdmin();await loadPublic();status('#v48UploadStatus',files.length+' file(s) uploaded successfully to Supabase.');
+   }catch(e){status('#v48UploadStatus','Upload failed: '+(e.message||e));}
+ }
+ async function download(path){
+   try{const {data,error}=await getClient().storage.from(BUCKET).download(path);if(error)throw error;
+     const blobUrl=URL.createObjectURL(data),a=document.createElement('a');a.href=blobUrl;a.download=path.split('/').pop()||'download';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(blobUrl),1500);
+   }catch(e){alert('Download failed: '+e.message)}
+ }
+ async function changeVisibility(id,wasPublic){
+   try{const {error}=await getClient().from('media_files').update({is_public:!wasPublic}).eq('id',id);if(error)throw error;await loadAdmin();await loadPublic();}
+   catch(e){alert('Could not change visibility: '+e.message)}
+ }
+ async function deleteCloud(id,path){
+   if(!confirm('Delete this cloud file permanently?'))return;
+   try{const c=getClient();const {error:dbErr}=await c.from('media_files').delete().eq('id',id);if(dbErr)throw dbErr;const {error:stErr}=await c.storage.from(BUCKET).remove([path]);if(stErr)throw stErr;await loadAdmin();await loadPublic();}
+   catch(e){alert('Delete failed: '+e.message)}
+ }
+ document.addEventListener('click',e=>{
+   const d=e.target.closest('[data-cloud-download]');if(d){download(d.dataset.cloudDownload);return}
+   const v=e.target.closest('[data-cloud-visibility]');if(v){changeVisibility(v.dataset.cloudVisibility,v.dataset.public==='true');return}
+   const x=e.target.closest('[data-cloud-delete]');if(x){deleteCloud(x.dataset.cloudDelete,x.dataset.path);return}
+ });
+ $('#visitorRefresh').addEventListener('click',loadPublic);
+ $('#visitorAdminAccess').addEventListener('click',()=>{document.body.classList.remove('visitor-mode');document.querySelector('[data-page="settings"]')?.click();document.querySelector('#v48Email')?.scrollIntoView({behavior:'smooth',block:'center'});});
+ $('#v48Connect').addEventListener('click',connect);$('#v48Login').addEventListener('click',login);$('#v48Logout').addEventListener('click',logout);
+ $('#v48Upload').addEventListener('click',upload);$('#v48LoadAdmin').addEventListener('click',loadAdmin);$('#v48RefreshPublic').addEventListener('click',loadPublic);
+ $('#v48ShowKey').addEventListener('click',()=>{$('#v48PublishableKey').type=$('#v48PublishableKey').type==='password'?'text':'password'});
+ $('#v48Password').addEventListener('keydown',e=>{if(e.key==='Enter')login()});
+ try{getClient().auth.onAuthStateChange((_event,session)=>{currentUser=session?.user||null;updateAuth();if(currentUser){setTimeout(loadAdmin,0)}else{$('#v48AdminGrid').innerHTML=''}});connect()}catch(e){status('#v48ConnectionStatus',e.message)}
+ updateAuth();
+})();
+</script>
+
 </body>
 </html>
