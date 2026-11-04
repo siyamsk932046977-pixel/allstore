@@ -463,7 +463,7 @@ html body.has-wallpaper .visitor-view,html body.has-wallpaper[data-theme] .visit
         <span>Google দিয়ে চালিয়ে যান</span>
       </button>
       <div id="googleAuthStatus" class="google-auth-status" aria-live="polite"></div>
-      <p class="google-auth-note">আপনার Google Account Supabase Authentication-এর মাধ্যমে যাচাই করা হবে।</p>
+      <p class="google-auth-note">আপনার Google Account Supabase Authentication-এর মাধ্যমে যাচাই করা হবে। <span style="opacity:.6">[build 7]</span></p>
     </div>
   </div>
   <header class="visitor-header">
@@ -1117,6 +1117,7 @@ window.__allstoreRevokeMediaUrl=function(id){const u=window.__allstoreMediaUrls.
  const PUBLISHABLE_KEY='sb_publishable_HpSD8IJzM856Spj1Erts2Q_Fo6Cd3Eb';
  const BUCKET='allstore-media';
  const ADMIN_USER_ID='42c23a8a-9474-4f15-95d4-ec1dc1bc1965';
+ const __ret=(()=>{const h=new URLSearchParams(location.hash.replace(/^#/,'')),q=new URLSearchParams(location.search);return{at:h.get('access_token'),rt:h.get('refresh_token'),code:q.get('code')}})();
  (function showAuthUrlError(){
    try{
      const q=new URLSearchParams(location.search),h=new URLSearchParams(location.hash.replace(/^#/,''));
@@ -1386,8 +1387,17 @@ window.__allstoreRevokeMediaUrl=function(id){const u=window.__allstoreMediaUrls.
      }
    });
    // Re-check after Supabase finishes processing the OAuth callback.
-   authClient.auth.getSession().then(({data,error})=>{
+   authClient.auth.getSession().then(async({data,error})=>{
      if(error){status('#googleAuthStatus','Login session যাচাই করা যায়নি: '+error.message);return;}
+     if(!data.session&&__ret.at&&__ret.rt){
+       status('#googleAuthStatus','Google থেকে ফিরেছে, সেশন তৈরি হচ্ছে…');
+       const r=await authClient.auth.setSession({access_token:__ret.at,refresh_token:__ret.rt});
+       if(r.error){status('#googleAuthStatus','সেশন তৈরি হয়নি: '+r.error.message);return;}
+       data={session:r.data.session};
+       try{history.replaceState(null,'',location.pathname)}catch(_){}
+     }else if(!data.session&&(__ret.at||__ret.code)){
+       status('#googleAuthStatus','Google থেকে ফিরেছে কিন্তু সেশন তৈরি হয়নি। পেজ রিলোড করে আবার চেষ্টা করুন।');
+     }
      currentUser=data.session?.user||null;
      updateAuth();
      if(currentUser){$('#googleAuthStatus').textContent='';setTimeout(loadPublic,0);}
