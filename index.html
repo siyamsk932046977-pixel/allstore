@@ -462,8 +462,8 @@ html body.has-wallpaper .visitor-view,html body.has-wallpaper[data-theme] .visit
         <span class="google-auth-g">G</span>
         <span>Google দিয়ে চালিয়ে যান</span>
       </button>
-      <div id="googleAuthStatus" class="google-auth-status" aria-live="polite"></div>
-      <p class="google-auth-note">আপনার Google Account Supabase Authentication-এর মাধ্যমে যাচাই করা হবে। <span style="opacity:.6">[build 7]</span></p>
+      <div id="googleAuthStatus" class="google-auth-status" aria-live="polite"></div><pre id="authDebug" style="text-align:left;white-space:pre-wrap;word-break:break-all;font:10px/1.5 monospace;color:#9fb0d0;background:rgba(0,0,0,.35);border-radius:10px;padding:8px;margin:10px 0 0;max-height:190px;overflow:auto"></pre>
+      <p class="google-auth-note">আপনার Google Account Supabase Authentication-এর মাধ্যমে যাচাই করা হবে। <span style="opacity:.6">[build 8]</span></p>
     </div>
   </div>
   <header class="visitor-header">
@@ -1117,6 +1117,14 @@ window.__allstoreRevokeMediaUrl=function(id){const u=window.__allstoreMediaUrls.
  const PUBLISHABLE_KEY='sb_publishable_HpSD8IJzM856Spj1Erts2Q_Fo6Cd3Eb';
  const BUCKET='allstore-media';
  const ADMIN_USER_ID='42c23a8a-9474-4f15-95d4-ec1dc1bc1965';
+ const dbg=(m)=>{try{const k='authDbg';let a=[];try{a=JSON.parse(localStorage.getItem(k)||'[]')}catch(_){}
+   a.push(new Date().toLocaleTimeString()+' '+m);a=a.slice(-18);localStorage.setItem(k,JSON.stringify(a));
+   const el=document.getElementById('authDebug');if(el)el.textContent=a.join('\n')}catch(_){}};
+ window.__dbg=dbg;
+ try{const el=document.getElementById('authDebug');if(el){let a=[];try{a=JSON.parse(localStorage.getItem('authDbg')||'[]')}catch(_){}el.textContent=a.join('\n')}}catch(_){}
+ dbg('LOAD '+location.origin+location.pathname+' | query='+(location.search?location.search.slice(0,60):'-')+' | hash='+(location.hash?location.hash.replace(/=[^&]{12,}/g,'=…').slice(0,90):'-'));
+ window.addEventListener('error',e=>dbg('JSERR '+(e.message||'')));
+ window.addEventListener('unhandledrejection',e=>dbg('PROMISE '+((e.reason&&e.reason.message)||e.reason)));
  const __ret=(()=>{const h=new URLSearchParams(location.hash.replace(/^#/,'')),q=new URLSearchParams(location.search);return{at:h.get('access_token'),rt:h.get('refresh_token'),code:q.get('code')}})();
  (function showAuthUrlError(){
    try{
@@ -1196,10 +1204,12 @@ window.__allstoreRevokeMediaUrl=function(id){const u=window.__allstoreMediaUrls.
    try{
      const c=getClient();
      const redirectTo='https://siyamsk932046977-pixel.github.io/allstore/';
-     const {error}=await c.auth.signInWithOAuth({
+     dbg('CLICK redirectTo='+redirectTo);
+     const {data:oa,error}=await c.auth.signInWithOAuth({
        provider:'google',
        options:{redirectTo,queryParams:{prompt:'select_account'}}
      });
+     dbg('OAUTH url='+(oa&&oa.url?oa.url.split('?')[0]:'none')+' err='+(error?error.message:'-'));
      if(error)throw error;
    }catch(e){
      if(msg)msg.textContent='Google Login শুরু করা যায়নি: '+(e.message||e);
@@ -1376,7 +1386,7 @@ window.__allstoreRevokeMediaUrl=function(id){const u=window.__allstoreMediaUrls.
  document.addEventListener('visibilitychange',staleCheck);setInterval(staleCheck,5*60*1000);
  try{
    const authClient=getClient();
-   authClient.auth.onAuthStateChange((event,session)=>{
+   authClient.auth.onAuthStateChange((event,session)=>{dbg('EVENT '+event+' user='+(session&&session.user?session.user.email:'none'));
      currentUser=session?.user||null;cachedToken=session?.access_token||null;
      updateAuth();
      if(isAdminUser(currentUser)){setTimeout(loadAdmin,0)}
@@ -1398,6 +1408,7 @@ window.__allstoreRevokeMediaUrl=function(id){const u=window.__allstoreMediaUrls.
      }else if(!data.session&&(__ret.at||__ret.code)){
        status('#googleAuthStatus','Google থেকে ফিরেছে কিন্তু সেশন তৈরি হয়নি। পেজ রিলোড করে আবার চেষ্টা করুন।');
      }
+     dbg('getSession user='+(data.session&&data.session.user?data.session.user.email+' id='+data.session.user.id.slice(0,8):'none'));
      currentUser=data.session?.user||null;
      updateAuth();
      if(currentUser){$('#googleAuthStatus').textContent='';setTimeout(loadPublic,0);}
