@@ -2,6 +2,7 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8">
+<script>try{if(!sessionStorage.getItem('sb_splash')){document.documentElement.classList.add('sp-hold');setTimeout(function(){document.documentElement.classList.remove('sp-hold')},12000)}}catch(e){}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#080914">
 <meta name="application-name" content="সাজেশন গাইড">
@@ -404,6 +405,25 @@ body:not(.visitor-mode) .sb-music-btn{display:none}
 .pub-sec img,.pub-sec video{display:block;width:100%;max-height:420px;object-fit:contain;border-radius:14px;background:#000}
 .pub-sec .pub-cap{margin-top:10px;font-size:14px;line-height:1.5;opacity:.78;white-space:pre-wrap;word-break:break-word}
 .pub-sec button.primary{max-width:100%}
+/* Smooth splash: don't render the heavy page under it */
+html.sp-hold .visitor-header,html.sp-hold .visitor-main,html.sp-hold #vbar,html.sp-hold #vbSheetBack{visibility:hidden}
+#welcomeSplash.welcome-splash{will-change:opacity}
+/* Liquid glass (Chromium only; other browsers keep the normal frosted glass) */
+html.lg-on .vbar{background:linear-gradient(135deg,rgba(255,255,255,.17),rgba(255,255,255,.05) 55%,rgba(120,200,255,.08)),rgba(8,12,28,.32);-webkit-backdrop-filter:url(#lgBar) blur(3px) saturate(1.7) brightness(1.06);backdrop-filter:url(#lgBar) blur(3px) saturate(1.7) brightness(1.06);box-shadow:0 22px 50px rgba(3,6,28,.55),0 0 46px rgba(124,140,255,.14),inset 0 1px 0 rgba(255,255,255,.45),inset 1px 0 0 rgba(255,255,255,.14),inset 0 -14px 28px rgba(110,200,255,.07)}
+html.lg-on .sb-music-btn{background:linear-gradient(135deg,rgba(255,255,255,.2),rgba(255,255,255,.05)),rgba(8,12,28,.22);-webkit-backdrop-filter:url(#lgBtn) blur(2px) saturate(1.7) brightness(1.08);backdrop-filter:url(#lgBtn) blur(2px) saturate(1.7) brightness(1.08);box-shadow:0 8px 24px rgba(0,0,0,.28),inset 1px 1px 0 rgba(255,255,255,.55),inset -1px -1px 0 rgba(255,255,255,.14)}
+html.lg-on .vb-item{text-shadow:0 1px 8px rgba(0,0,0,.55)}
+#lgDefs{position:absolute;width:0;height:0;overflow:hidden;pointer-events:none}
+/* Public wallpaper */
+.pub-wallpaper{position:fixed;top:0;left:0;right:0;height:100vh;height:100lvh;z-index:-1;overflow:hidden;pointer-events:none;opacity:0;transition:opacity .8s ease;background:#05070f}
+.pub-wallpaper.on{opacity:1}
+.pub-wallpaper .wp-img{position:absolute;inset:-28px;background-position:center;background-size:cover;background-repeat:no-repeat;filter:blur(var(--wp-blur,0px));transform:translateZ(0)}
+.pub-wallpaper::after{content:"";position:absolute;inset:0;background:rgba(4,7,18,var(--wp-dim,.35))}
+body:not(.visitor-mode) .pub-wallpaper{display:none}
+html body.has-wallpaper .visitor-view,html body.has-wallpaper[data-theme] .visitor-view{background:transparent!important}
+.wp-prev{position:relative;height:150px;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:#0a0d1a center/cover no-repeat;margin:10px 0}
+.wp-prev .wp-in{position:absolute;inset:-14px;background-position:center;background-size:cover}
+.wp-prev .wp-ov{position:absolute;inset:0;background:rgba(4,7,18,.35)}
+.wp-prev .wp-empty{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:13px}
 </style>
 </head>
 
@@ -595,6 +615,20 @@ body:not(.visitor-mode) .sb-music-btn{display:none}
       <div class="cloud-actions"><button class="primary" type="button" id="musicUpload">Upload & publish</button><button class="secondary" type="button" id="musicSave">Save volume / settings</button><button class="secondary" type="button" id="musicPreview">▶ Preview</button><button class="secondary" type="button" id="musicRemove" style="color:#fca5a5">Remove music</button></div>
       <div class="cloud-status" id="musicStatus" aria-live="polite"></div>
       <details id="musicSqlDetails" style="margin-top:12px"><summary style="cursor:pointer;color:var(--muted)">প্রথমবার সেটআপ / Database SQL</summary><p class="v4-help">নিচের SQL একবার Supabase → SQL Editor-এ Run করলে গান আপলোড চালু হবে। এছাড়া ভিজিটরের ফোনে প্রথমবার স্ক্রিনে ট্যাপ করলে গান শুরু হয় (ব্রাউজারের নিয়ম)।</p><button class="secondary" type="button" id="musicCopySql">Copy setup SQL</button><textarea id="musicSqlBox" readonly rows="8" spellcheck="false" aria-label="Setup SQL" style="width:100%;margin-top:10px;box-sizing:border-box;font:12px/1.5 monospace;padding:10px;border-radius:12px;border:1px solid var(--line);background:#ffffff0b;color:inherit"></textarea></details>
+    </div>
+    <div class="setting-card glass" id="siteWallpaperCard">
+      <h3>🖼 Public Wallpaper</h3>
+      <p>পাবলিক ওয়েবসাইটের ব্যাকগ্রাউন্ডে নিজের পছন্দের ছবি ওয়ালপেপার হিসেবে বসান। ছবি আপলোড করলে নিজে থেকে ছোট ও হালকা করে নেওয়া হবে।</p>
+      <div class="cloud-status" id="wpCurrent">বর্তমান ওয়ালপেপার লোড হচ্ছে...</div>
+      <div class="wp-prev" id="wpPrev"><div class="wp-empty" id="wpEmpty">কোনো ছবি নেই</div></div>
+      <div class="cloud-form" style="margin-top:10px">
+        <div style="grid-column:1/-1"><label for="wpFile">ছবি বাছাই করুন (JPG, PNG, WebP)</label><input id="wpFile" type="file" accept="image/*"></div>
+        <div style="grid-column:1/-1"><label for="wpDim">Dark overlay (লেখা পড়ার সুবিধার জন্য): <b id="wpDimValue">35%</b></label><input id="wpDim" type="range" min="0" max="85" value="35"></div>
+        <div style="grid-column:1/-1"><label for="wpBlur">Blur: <b id="wpBlurValue">0px</b></label><input id="wpBlur" type="range" min="0" max="24" value="0"></div>
+      </div>
+      <div class="setting-row"><span>পাবলিক সাইটে ওয়ালপেপার চালু</span><input id="wpEnabled" class="switch" type="checkbox" checked></div>
+      <div class="cloud-actions"><button class="primary" type="button" id="wpUpload">Upload & publish</button><button class="secondary" type="button" id="wpSave">Save settings</button><button class="secondary" type="button" id="wpRemove" style="color:#fca5a5">Remove wallpaper</button></div>
+      <div class="cloud-status" id="wpStatus" aria-live="polite"></div>
     </div>
     <div class="setting-card glass" id="nextGenAppearance"><h3>✦ Next-generation appearance</h3><p>Choose a visual atmosphere and tune the glass surface. Your choices are saved on this device.</p><div class="setting-row"><label for="allstoreTheme">Visual theme</label><select id="allstoreTheme" class="nextgen-select"><option value="midnight">Midnight Aurora</option><option value="ocean">Ocean Glass</option><option value="emerald">Emerald Glow</option><option value="sunset">Sunset Prism</option><option value="crystal">Crystal Light</option></select></div><div class="setting-row"><label for="allstoreGlassBlur">Glass blur</label><input id="allstoreGlassBlur" type="range" min="10" max="34" value="24"></div><div class="setting-row"><label for="allstoreMotion">Enhanced motion</label><input id="allstoreMotion" class="switch" type="checkbox" checked></div><div class="setting-row"><label for="allstoreSpotlight">Pointer light reflection</label><input id="allstoreSpotlight" class="switch" type="checkbox" checked></div><p class="v4-help">On touch devices, pointer lighting is subtle or disabled automatically. Reduced-motion system preferences are respected.</p></div>
     <div class="setting-card glass"><h3>Workspace</h3><p>Personalize the name shown in your dashboard.</p><div class="setting-row"><span>Workspace name</span><input id="workspaceName" value="Personal library" style="max-width:180px;background:#ffffff0c;color:white;border:1px solid var(--line);padding:8px;border-radius:9px"></div><div class="setting-row"><span>Motion effects</span><input class="switch" type="checkbox" id="motionToggle" checked></div></div>
@@ -1613,13 +1647,235 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 })();
 </script>
 
+<svg id="lgDefs" width="0" height="0" aria-hidden="true" focusable="false"><defs>
+<filter id="lgBar" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB" primitiveUnits="userSpaceOnUse"><feImage id="lgBarMap" x="0" y="0" width="430" height="68" preserveAspectRatio="none" result="m"/><feDisplacementMap in="SourceGraphic" in2="m" scale="28" xChannelSelector="R" yChannelSelector="G"/></filter>
+<filter id="lgBtn" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB" primitiveUnits="userSpaceOnUse"><feImage id="lgBtnMap" x="0" y="0" width="42" height="42" preserveAspectRatio="none" result="m"/><feDisplacementMap in="SourceGraphic" in2="m" scale="14" xChannelSelector="R" yChannelSelector="G"/></filter>
+</defs></svg>
+<script id="liquid-glass-engine">
+(()=>{'use strict';
+const UA=navigator.userAgent||'';
+let ok=false;
+try{ok=/Chrome\/\d+/.test(UA)&&!!(window.CSS&&CSS.supports&&CSS.supports('backdrop-filter','url(#lgBar) blur(2px)'))}catch(e){ok=false}
+if(!ok)return;
+const cache={};
+function buildMap(w,h,radius,bezel,amp){
+ const key=[w,h,radius,bezel,amp].join('x');if(cache[key])return cache[key];
+ const c=document.createElement('canvas');c.width=w;c.height=h;
+ const ctx=c.getContext('2d');if(!ctx)return '';
+ const img=ctx.createImageData(w,h),d=img.data,r=Math.min(radius,w/2,h/2);
+ for(let y=0;y<h;y++){for(let x=0;x<w;x++){
+  const px=x+.5-w/2,py=y+.5-h/2;
+  const qx=Math.abs(px)-(w/2-r),qy=Math.abs(py)-(h/2-r);
+  const sdf=Math.hypot(Math.max(qx,0),Math.max(qy,0))+Math.min(Math.max(qx,qy),0)-r;
+  const depth=-sdf;let vx=0,vy=0;
+  if(depth>=0&&depth<bezel){
+   let nx,ny;
+   if(qx>0&&qy>0){const len=Math.hypot(qx,qy)||1;nx=(px<0?-1:1)*qx/len;ny=(py<0?-1:1)*qy/len}
+   else if(qx>qy){nx=px<0?-1:1;ny=0}else{nx=0;ny=py<0?-1:1}
+   const m=Math.pow(1-depth/bezel,2)*amp;vx=-nx*m;vy=-ny*m;
+  }
+  const i=(y*w+x)*4;
+  d[i]=Math.max(0,Math.min(255,Math.round(127.5+127.5*vx/amp)));
+  d[i+1]=Math.max(0,Math.min(255,Math.round(127.5+127.5*vy/amp)));
+  d[i+2]=128;d[i+3]=255;
+ }}
+ ctx.putImageData(img,0,0);
+ return cache[key]=c.toDataURL('image/png');
+}
+function setMap(id,w,h,radius,bezel,amp){
+ const fe=document.getElementById(id);if(!fe||w<8||h<8)return false;
+ const url=buildMap(w,h,radius,bezel,amp);if(!url)return false;
+ fe.setAttribute('width',String(w));fe.setAttribute('height',String(h));
+ fe.setAttribute('href',url);fe.setAttributeNS('http://www.w3.org/1999/xlink','href',url);
+ const f=fe.parentNode;const dm=f&&f.querySelector('feDisplacementMap');if(dm)dm.setAttribute('scale',String(amp*2));
+ return true;
+}
+let started=false;
+function update(){
+ const bar=document.getElementById('vbar'),btn=document.getElementById('sbMusicBtn');
+ let any=false;
+ if(bar){const r=bar.getBoundingClientRect();const w=Math.round(r.width||bar.offsetWidth),h=Math.round(r.height||bar.offsetHeight);if(w&&h)any=setMap('lgBarMap',w,h,28,18,14)||any}
+ if(btn&&btn.offsetWidth){any=setMap('lgBtnMap',btn.offsetWidth,btn.offsetHeight,btn.offsetWidth/2,9,7)||any}
+ if(any&&!started){started=true;document.documentElement.classList.add('lg-on')}
+}
+let t=null;const sched=()=>{clearTimeout(t);t=setTimeout(update,120)};
+window.addEventListener('resize',sched);
+try{const ro=new ResizeObserver(sched);const bar=document.getElementById('vbar');if(bar)ro.observe(bar)}catch(e){}
+// the music button appears later
+new MutationObserver(sched).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['hidden']});
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',update,{once:true});else update();
+setTimeout(update,800);
+})();
+</script>
+<script id="site-wallpaper-engine">
+(()=>{'use strict';
+const $=s=>document.querySelector(s);
+const ADMIN_ID='42c23a8a-9474-4f15-95d4-ec1dc1bc1965',BUCKET='site-music',MAX_IN=25*1024*1024;
+const visitor=()=>document.body.classList.contains('visitor-mode');
+const num=(v,d)=>{v=Number(v);return Number.isFinite(v)?v:d};
+function clean(m){
+ if(!m||typeof m!=='object')return null;
+ const path=typeof m.path==='string'&&/^[A-Za-z0-9._\/-]{1,200}$/.test(m.path)&&m.path.indexOf('..')<0?m.path:'';
+ if(!path)return null;
+ return {path,name:String(m.name||'').slice(0,120),dim:Math.max(0,Math.min(85,Math.round(num(m.dim,35)))),blur:Math.max(0,Math.min(24,Math.round(num(m.blur,0)))),enabled:m.enabled!==false,v:num(m.v,0)};
+}
+const client=async()=>{if(typeof window.__getSB!=='function')throw new Error('Cloud client unavailable. Reload and test Supabase connection.');return window.__getSB()};
+async function readConfig(c){const {data,error}=await c.from('public_site_settings').select('config').eq('id','main').maybeSingle();if(error)throw error;return data&&data.config&&typeof data.config==='object'?data.config:{}}
+const urlOf=(c,p)=>c.storage.from(BUCKET).getPublicUrl(p).data.publicUrl;
+
+/* ================= PUBLIC: apply wallpaper ================= */
+let wpEl=null,wpPath='';
+function removeWp(){if(wpEl){wpEl.remove();wpEl=null}wpPath='';if(document.body.classList.contains('has-wallpaper'))document.body.classList.remove('has-wallpaper')}
+function applyWallpaper(c,raw){
+ const m=clean(raw);
+ if(!visitor()||!m||!m.enabled){removeWp();return}
+ if(!wpEl){
+  wpEl=document.createElement('div');wpEl.className='pub-wallpaper';wpEl.setAttribute('aria-hidden','true');
+  const im=document.createElement('div');im.className='wp-img';wpEl.append(im);
+  document.body.prepend(wpEl);
+ }
+ wpEl.style.setProperty('--wp-dim',String(m.dim/100));
+ wpEl.style.setProperty('--wp-blur',m.blur+'px');
+ if(wpPath!==m.path){
+  wpPath=m.path;
+  const url=urlOf(c,m.path),pre=new Image(),mine=m.path;
+  pre.onload=()=>{if(!wpEl||wpPath!==mine)return;wpEl.firstChild.style.backgroundImage='url("'+url.replace(/"/g,'%22')+'")';if(!document.body.classList.contains('has-wallpaper'))document.body.classList.add('has-wallpaper');requestAnimationFrame(()=>{if(wpEl)wpEl.classList.add('on')})};
+  pre.onerror=()=>{if(wpPath===mine)removeWp()};
+  pre.src=url;
+ }else if(wpEl&&wpEl.firstChild.style.backgroundImage&&!document.body.classList.contains('has-wallpaper')){document.body.classList.add('has-wallpaper')}
+}
+window.addEventListener('sb:config',e=>{try{applyWallpaper(e.detail.c,e.detail.conf.wallpaper)}catch(_){}});
+{let wasV=visitor();new MutationObserver(()=>{const v=visitor();if(v===wasV)return;wasV=v;if(!v)removeWp()}).observe(document.body,{attributes:true,attributeFilter:['class']})}
+
+/* ================= ADMIN: Settings → Public Wallpaper ================= */
+function adminInit(){
+ if(!$('#siteWallpaperCard'))return;
+ const el={cur:$('#wpCurrent'),prev:$('#wpPrev'),empty:$('#wpEmpty'),file:$('#wpFile'),dim:$('#wpDim'),dimV:$('#wpDimValue'),blur:$('#wpBlur'),blurV:$('#wpBlurValue'),en:$('#wpEnabled'),up:$('#wpUpload'),save:$('#wpSave'),rem:$('#wpRemove'),st:$('#wpStatus')};
+ const say=t=>{el.st.textContent=t};
+ let saved=null,objUrl=null,inner=null,ov=null;
+ const friendly=(e,what)=>{
+  const m=String(e&&e.message||e);
+  if(/bucket not found|resource was not found|not_found|404/i.test(m))return 'গান/ওয়ালপেপার রাখার জায়গা (bucket) এখনো তৈরি হয়নি। Settings → Background Music-এর "প্রথমবার সেটআপ" থেকে SQL একবার Run করুন।';
+  if(/row-level security|policy|403|unauthorized|not allowed/i.test(m))return 'অনুমতি নেই। Admin login এবং setup SQL ঠিক আছে কি না দেখুন। ('+m+')';
+  if(/public_site_settings|does not exist|schema cache|42P01/i.test(m))return 'Database setup প্রয়োজন (পাবলিক সেটিংস SQL)। '+m;
+  return what+': '+m;
+ };
+ async function ensureAdmin(c){
+  const {data,error}=await c.auth.getSession();if(error)throw error;
+  if(!data||!data.session||data.session.user.id!==ADMIN_ID)throw new Error('শুধু Admin account দিয়ে Login করে ওয়ালপেপার বদলানো যাবে (Settings → Admin Login)।');
+ }
+ async function publish(c,fn){
+  const cur=await readConfig(c);const next=fn({...cur});
+  const {error}=await c.from('public_site_settings').upsert({id:'main',config:next,updated_at:new Date().toISOString()},{onConflict:'id'});
+  if(error)throw error;return cur;
+ }
+ function txt(){el.dimV.textContent=el.dim.value+'%';el.blurV.textContent=el.blur.value+'px'}
+ function setPreview(url){
+  if(!inner){inner=document.createElement('div');inner.className='wp-in';ov=document.createElement('div');ov.className='wp-ov';el.prev.append(inner,ov)}
+  if(url){inner.style.backgroundImage='url("'+url+'")';el.empty.style.display='none'}
+  else{inner.style.backgroundImage='';el.empty.style.display=''}
+  paintPrev();
+ }
+ function paintPrev(){if(!inner)return;inner.style.filter='blur('+(Number(el.blur.value)/2)+'px)';ov.style.background='rgba(4,7,18,'+(Number(el.dim.value)/100)+')'}
+ function paintCur(){
+  el.cur.textContent=saved?('বর্তমান ওয়ালপেপার: '+(saved.name||saved.path.split('/').pop())+(saved.enabled?'':' (পাবলিক সাইটে বন্ধ আছে)')):'বর্তমানে কোনো ওয়ালপেপার সেট করা নেই।';
+  el.rem.disabled=!saved;el.save.disabled=!saved;
+ }
+ async function load(){
+  try{
+   const c=await client();const conf=await readConfig(c);saved=clean(conf.wallpaper);
+   if(saved){el.dim.value=saved.dim;el.blur.value=saved.blur;el.en.checked=saved.enabled}
+   txt();paintCur();
+   if(!el.file.files||!el.file.files[0])setPreview(saved?urlOf(c,saved.path):'');
+  }catch(e){paintCur();say(friendly(e,'লোড হয়নি'))}
+ }
+ el.dim.addEventListener('input',()=>{txt();paintPrev()});
+ el.blur.addEventListener('input',()=>{txt();paintPrev()});
+ el.file.addEventListener('change',()=>{
+  const f=el.file.files&&el.file.files[0];
+  if(objUrl){URL.revokeObjectURL(objUrl);objUrl=null}
+  if(f&&/^image\//i.test(f.type)){objUrl=URL.createObjectURL(f);setPreview(objUrl);say('')}
+  else if(f){say('শুধু ছবি (JPG, PNG, WebP) বাছাই করুন।')}
+ });
+ // shrink big photos so visitors download less (max 2000px, JPEG)
+ async function prepare(file){
+  let bmp=null,w=0,h=0;
+  try{bmp=await createImageBitmap(file);w=bmp.width;h=bmp.height}
+  catch(e){
+   const u=URL.createObjectURL(file);
+   try{const im=await new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=()=>rej(new Error('ছবিটি পড়া যায়নি। JPG বা PNG ছবি দিন।'));i.src=u});bmp=im;w=im.naturalWidth;h=im.naturalHeight}
+   finally{URL.revokeObjectURL(u)}
+  }
+  const maxSide=2000;
+  if(file.size<=900*1024&&Math.max(w,h)<=2400&&/^image\/(jpeg|png|webp)$/i.test(file.type)){if(bmp&&bmp.close)bmp.close();return {blob:file,ext:(file.type.split('/')[1]||'jpg').replace('jpeg','jpg'),type:file.type}}
+  const k=Math.min(1,maxSide/Math.max(w,h));
+  const cw=Math.max(1,Math.round(w*k)),ch=Math.max(1,Math.round(h*k));
+  const cv=document.createElement('canvas');cv.width=cw;cv.height=ch;
+  const ctx=cv.getContext('2d');ctx.fillStyle='#000';ctx.fillRect(0,0,cw,ch);ctx.drawImage(bmp,0,0,cw,ch);
+  if(bmp.close)bmp.close();
+  const blob=await new Promise(res=>cv.toBlob(res,'image/jpeg',.86));
+  if(!blob)throw new Error('ছবি ছোট করা যায়নি।');
+  return {blob,ext:'jpg',type:'image/jpeg'};
+ }
+ el.up.addEventListener('click',async()=>{
+  const f=el.file.files&&el.file.files[0];
+  if(!f){say('আগে একটি ছবি বাছাই করুন।');return}
+  if(!/^image\//i.test(f.type)){say('শুধু ছবি (JPG, PNG, WebP) বাছাই করুন।');return}
+  if(f.size>MAX_IN){say('ছবিটি অনেক বড় (২৫ MB-এর বেশি)।');return}
+  el.up.disabled=true;say('ছবি তৈরি ও আপলোড হচ্ছে…');
+  let c=null,path='';
+  try{
+   c=await client();await ensureAdmin(c);
+   const out=await prepare(f);
+   path='wallpaper/'+Date.now()+'-'+Math.random().toString(36).slice(2,8)+'.'+out.ext;
+   const {error:upErr}=await c.storage.from(BUCKET).upload(path,out.blob,{contentType:out.type,upsert:false,cacheControl:'31536000'});
+   if(upErr)throw upErr;
+   const wp={path,name:f.name.slice(0,120),dim:Number(el.dim.value),blur:Number(el.blur.value),enabled:el.en.checked,v:Date.now()};
+   let cur;
+   try{cur=await publish(c,cfg=>({...cfg,wallpaper:wp}))}catch(e){try{await c.storage.from(BUCKET).remove([path])}catch(_){}throw e}
+   const old=clean(cur.wallpaper);if(old&&old.path!==path){try{await c.storage.from(BUCKET).remove([old.path])}catch(_){}}
+   saved=wp;el.file.value='';if(objUrl){URL.revokeObjectURL(objUrl);objUrl=null}
+   setPreview(urlOf(c,path));paintCur();say('✓ ওয়ালপেপার আপলোড হয়েছে এবং পাবলিক সাইটে প্রকাশ হয়েছে।');
+  }catch(e){say(friendly(e,'আপলোড হয়নি'))}
+  finally{el.up.disabled=false}
+ });
+ el.save.addEventListener('click',async()=>{
+  if(!saved){say('আগে ওয়ালপেপার আপলোড করুন।');return}
+  el.save.disabled=true;
+  try{
+   const c=await client();await ensureAdmin(c);let wp=null;
+   await publish(c,cfg=>{const m=clean(cfg.wallpaper)||saved;wp={...m,dim:Number(el.dim.value),blur:Number(el.blur.value),enabled:el.en.checked,v:Date.now()};return {...cfg,wallpaper:wp}});
+   saved=wp;paintCur();say('✓ সেটিংস সেভ হয়েছে এবং পাবলিক সাইটে প্রকাশ হয়েছে।');
+  }catch(e){say(friendly(e,'সেভ হয়নি'))}
+  finally{el.save.disabled=!saved}
+ });
+ el.rem.addEventListener('click',async()=>{
+  if(!saved)return;
+  if(!confirm('ওয়ালপেপার মুছে ফেলবেন? পাবলিক সাইটে আগের ব্যাকগ্রাউন্ড ফিরে আসবে।'))return;
+  el.rem.disabled=true;
+  try{
+   const c=await client();await ensureAdmin(c);
+   const cur=await publish(c,cfg=>{const {wallpaper,...rest}=cfg;return rest});
+   const old=clean(cur.wallpaper)||saved;try{await c.storage.from(BUCKET).remove([old.path])}catch(_){}
+   saved=null;setPreview('');paintCur();say('✓ ওয়ালপেপার মুছে ফেলা হয়েছে।');
+  }catch(e){say(friendly(e,'মোছা যায়নি'));el.rem.disabled=!saved}
+ });
+ txt();paintCur();load();
+ const nav=document.querySelector('.nav button[data-page=settings]');if(nav)nav.addEventListener('click',load);
+ {let wasV=visitor();new MutationObserver(()=>{const v=visitor();if(v===wasV)return;wasV=v;if(!v)load()}).observe(document.body,{attributes:true,attributeFilter:['class']})}
+}
+function boot(){adminInit()}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+})();
+</script>
 <script id="logo-splash-js">
 (()=>{'use strict';
+const unhide=()=>document.documentElement.classList.remove('sp-hold');
 const sp=document.getElementById('welcomeSplash'),holder=document.getElementById('spLogo'),data=document.getElementById('spAnimData');
-if(!sp||!holder||!document.body.classList.contains('visitor-mode'))return;
+if(!sp||!holder||!document.body.classList.contains('visitor-mode')){unhide();return}
 let shown=false,started=false,timer=null;
-function finish(){if(!sp.isConnected)return;sp.classList.add('sp-out');setTimeout(()=>{if(sp.isConnected)sp.remove()},800)}
-function showText(){if(shown)return;shown=true;sp.classList.add('sp-text');timer=setTimeout(finish,1600)}
+function finish(){unhide();if(!sp.isConnected)return;sp.classList.add('sp-out');setTimeout(()=>{if(sp.isConnected)sp.remove()},800)}
+function showText(){if(shown)return;shown=true;unhide();sp.classList.add('sp-text');timer=setTimeout(finish,1600)}
 function still(){if(started&&shown)return;sp.classList.add('sp-still');showText()}
 const src=data?String(data.textContent||'').trim():'';
 if(!src){still();return}
@@ -1634,7 +1890,7 @@ im.src=src;
 if(im.decode){im.decode().then(start,()=>{if(im.complete&&im.naturalWidth)start();else if(!started)still()})}
 else{im.onload=start}
 setTimeout(()=>{if(!started)still()},5000);
-sp.addEventListener('click',()=>{clearTimeout(timer)});
+sp.addEventListener('click',()=>{clearTimeout(timer);unhide()});
 })();
 </script>
 <script id="site-music-engine">
@@ -1728,6 +1984,7 @@ async function refresh(){
   const c=await client();const conf=await readConfig(c);
   if(!visitor())return;
   try{renderPublicSections(conf.sections)}catch(e){}
+  try{window.__sbConf=conf;window.dispatchEvent(new CustomEvent('sb:config',{detail:{conf:conf,c:c}}))}catch(e){}
   startVisitor(c,conf);
  }catch(e){}
 }
@@ -1736,7 +1993,7 @@ document.addEventListener('visibilitychange',()=>{
  if(document.hidden){try{audio.pause()}catch(e){}}
  else{tryPlay(false);refresh()}
 });
-new MutationObserver(()=>{if(visitor())refresh();else stopVisitor()}).observe(document.body,{attributes:true,attributeFilter:['class']});
+{let wasV=visitor();new MutationObserver(()=>{const v=visitor();if(v===wasV)return;wasV=v;if(v)refresh();else stopVisitor()}).observe(document.body,{attributes:true,attributeFilter:['class']})}
 setInterval(()=>{if(document.visibilityState==='visible')refresh()},180000);
 
 /* ================= ADMIN: Settings → Background Music ================= */
@@ -1844,7 +2101,7 @@ function adminInit(){
  });
  volTxt();paintCur();load();
  const nav=document.querySelector('.nav button[data-page=settings]');if(nav)nav.addEventListener('click',load);
- new MutationObserver(()=>{if(!visitor())load()}).observe(document.body,{attributes:true,attributeFilter:['class']});
+ {let wasV=visitor();new MutationObserver(()=>{const v=visitor();if(v===wasV)return;wasV=v;if(!v)load()}).observe(document.body,{attributes:true,attributeFilter:['class']})}
 }
 /* ================= Custom sections (public site only) ================= */
 const SEC_TYPES=['text','image','video','button'];
@@ -1925,7 +2182,7 @@ function builderInit(){
  }
  sync();
  const nav=document.querySelector('.nav button[data-page=customize]');if(nav)nav.addEventListener('click',sync);
- new MutationObserver(()=>{if(!visitor())sync()}).observe(document.body,{attributes:true,attributeFilter:['class']});
+ {let wasV=visitor();new MutationObserver(()=>{const v=visitor();if(v===wasV)return;wasV=v;if(!v)sync()}).observe(document.body,{attributes:true,attributeFilter:['class']})}
 }
 function boot(){adminInit();builderInit();searchInit();refresh()}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
