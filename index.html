@@ -2358,7 +2358,7 @@ html body .glass,html body .sidebar,html body .stat,html body .hero,html body .s
 /* Light "crystal" theme */
 html body.visitor-mode[data-theme="crystal"]:not(.pub-glass-off) .visitor-grid .cloud-card{border-color:rgba(255,255,255,.75)!important;box-shadow:0 14px 36px rgba(70,90,130,.2),inset 0 1.5px 0 rgba(255,255,255,.95),inset 0 -1px 0 rgba(255,255,255,.5)!important}
 </style>
-<script id="offline-sw">(function(){try{if(!('serviceWorker' in navigator)||!/^https?:$/.test(location.protocol))return;window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js?p='+encodeURIComponent(location.pathname)).catch(function(){})})}catch(e){}})();</script>
+<script id="offline-sw">(function(){try{if(!('serviceWorker' in navigator))return;navigator.serviceWorker.getRegistrations().then(function(r){r.forEach(function(x){x.unregister()})}).catch(function(){});if(window.caches)caches.keys().then(function(k){k.forEach(function(n){caches.delete(n)})}).catch(function(){})}catch(e){}})();</script>
 </body>
 
 
