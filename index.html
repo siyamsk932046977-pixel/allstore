@@ -1117,6 +1117,23 @@ window.__allstoreRevokeMediaUrl=function(id){const u=window.__allstoreMediaUrls.
  const PUBLISHABLE_KEY='sb_publishable_HpSD8IJzM856Spj1Erts2Q_Fo6Cd3Eb';
  const BUCKET='allstore-media';
  const ADMIN_USER_ID='42c23a8a-9474-4f15-95d4-ec1dc1bc1965';
+ (function showAuthUrlError(){
+   try{
+     const q=new URLSearchParams(location.search),h=new URLSearchParams(location.hash.replace(/^#/,''));
+     const code=q.get('error_code')||h.get('error_code')||q.get('error')||h.get('error');
+     if(!code)return;
+     const desc=(q.get('error_description')||h.get('error_description')||'').replace(/\+/g,' ');
+     let msg='Login ব্যর্থ: '+(desc||code);
+     if(/signup_disabled|Signups not allowed/i.test(code+desc))msg='নতুন ইউজার সাইনআপ বন্ধ আছে। Supabase → Authentication → Sign In / Providers-এ "Allow new users to sign up" চালু করুন।';
+     else if(/Database error saving new user/i.test(desc))msg='Supabase-এ নতুন ইউজার সেভ করা যাচ্ছে না (Database error saving new user)। auth.users-এর ওপর কোনো trigger/function ভুল আছে কিনা দেখুন।';
+     else if(/redirect/i.test(desc))msg='Redirect URL অনুমোদিত নয়। Supabase → Authentication → URL Configuration-এ এই সাইটের ঠিকানা Redirect URLs-এ যোগ করুন।';
+     else if(/provider.*not enabled|Unsupported provider/i.test(desc))msg='Supabase-এ Google provider চালু নেই।';
+     const el=document.getElementById('googleAuthStatus');
+     if(el){el.textContent=msg;el.style.color='#fca5a5'}
+     const gate=document.getElementById('googleAuthGate');if(gate)gate.classList.add('open');
+     history.replaceState(null,'',location.pathname);
+   }catch(e){}
+ })();
  let client=null, currentUser=null, publicFiles=[], lastPublicLoad=0;
  window.__getSB=()=>getClient();
  const status=(id,msg)=>{const el=$(id);if(el)el.textContent=msg};
@@ -1343,6 +1360,7 @@ window.__allstoreRevokeMediaUrl=function(id){const u=window.__allstoreMediaUrls.
  });
  $('#visitorRefresh')?.addEventListener('click',loadPublic);
  $('#googleSignInButton')?.addEventListener('click',loginWithGoogle);
+ window.addEventListener('pageshow',e=>{if(e.persisted){const b=$('#googleSignInButton');if(b){b.disabled=false;const l=b.querySelector('span:last-child');if(l)l.textContent='Google দিয়ে চালিয়ে যান'}}});
  $('#visitorMenuButton')?.addEventListener('click',()=>{const pop=$('#visitorMenuPop');pop.classList.toggle('open');$('#visitorMenuButton').setAttribute('aria-expanded',pop.classList.contains('open')?'true':'false');});
  $('#openAdminLogin')?.addEventListener('click',()=>{$('#visitorMenuPop').classList.remove('open');$('#adminLoginBack').classList.add('open');$('#visitorLoginEmail').focus();});
  $('#cancelAdminLogin').addEventListener('click',()=>{$('#adminLoginBack').classList.remove('open');$('#visitorLoginStatus').textContent='';});
