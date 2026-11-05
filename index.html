@@ -7,6 +7,9 @@
 if(_has){_d.classList.add('g-ok')}if(!_has){_d.classList.add('g-need');if(/[?&](code|error)=/.test(location.search)||/access_token=|error=/.test(location.hash))_d.classList.add('g-checking')}}catch(e){document.documentElement.classList.add('g-need')}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#080914">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="application-name" content="সাজেশন গাইড">
 <meta name="description" content="সাজেশন গাইড (সাজেশন বই) — সাজেশন ও পড়াশোনার ফাইল এক জায়গায় দেখুন ও ডাউনলোড করুন। আপনার ডিজিটাল ফাইল লাইব্রেরি।">
 <meta name="robots" content="index,follow,max-image-preview:large">
@@ -2409,6 +2412,7 @@ function init(){
 try{init()}catch(e){}
 })();
 </script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})}</script>
 </body>
 
 
