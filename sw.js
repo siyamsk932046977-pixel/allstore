@@ -3,7 +3,7 @@
 //  - the Supabase script + Bengali font are cached, so the app starts offline
 //  - file images/thumbnails are cached when seen once, so they show offline
 //  - Supabase login / database / downloads are never touched
-const VER = 'sajesson-v3';
+const VER = 'sajesson-v4';
 const IMG = 'sajesson-img-v1';
 const SHELL = ['./', 'index.html', 'manifest.json', 'splash-anim.webp', 'icon-192.png', 'icon-512.png', 'maskable-512.png'];
 // outside files the page needs to start (same URLs as in index.html)
@@ -12,7 +12,7 @@ const LIBS = [
   'https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap'
 ];
 const CDN_HOSTS = ['cdn.jsdelivr.net', 'fonts.googleapis.com', 'fonts.gstatic.com'];
-const IMG_MAX_ITEMS = 150;            // keep at most this many images
+const IMG_MAX_ITEMS = 600;            // keep at most this many images
 const IMG_MAX_BYTES = 8 * 1024 * 1024;   // skip single images bigger than this
 
 self.addEventListener('install', e => {
@@ -39,10 +39,17 @@ async function trimImages(cache) {
 
 // File pictures from Supabase storage. Cached by path (the changing ?token= is ignored),
 // so a picture seen once is still there offline even after its link expired.
+// One canonical key per picture, whatever way the path was encoded.
+function imgKey(url) {
+  let p = url.pathname;
+  try { p = encodeURI(decodeURI(p)); } catch (_) {}
+  return new Request(url.origin + p);
+}
+
 async function imageHandler(ev, req, url) {
   const cache = await caches.open(IMG);
-  const key = new Request(url.origin + url.pathname);
-  const hit = await cache.match(key);
+  const key = imgKey(url);
+  const hit = (await cache.match(key)) || (await cache.match(new Request(url.origin + url.pathname)));
   if (hit) return hit;
   let res;
   try { res = await fetch(url.href, { mode: 'cors', credentials: 'omit' }); }
@@ -119,6 +126,35 @@ self.addEventListener('fetch', e => {
   );
 });
 
+// The page asks us to save all pictures of an opened multi-page file, so they open offline later.
+async function precache(urls) {
+  const cache = await caches.open(IMG);
+  const list = (urls || []).slice(0, 200);
+  let i = 0;
+  async function worker() {
+    while (i < list.length) {
+      const href = list[i++];
+      try {
+        const u = new URL(href);
+        if (!u.hostname.endsWith('.supabase.co') || !/\/storage\/v1\/object\/(sign|public)\//.test(u.pathname)) continue;
+        const key = imgKey(u);
+        if (await cache.match(key)) continue;
+        const res = await fetch(u.href, { mode: 'cors', credentials: 'omit' });
+        if (!res || !res.ok) continue;
+        const len = Number(res.headers.get('content-length') || 0);
+        if (!/^image\//.test(res.headers.get('content-type') || '') || (len && len > IMG_MAX_BYTES)) continue;
+        await cache.put(key, res);
+      } catch (_) {}
+    }
+  }
+  await Promise.all([worker(), worker()]);
+  await trimImages(cache);
+}
+self.addEventListener('message', e => {
+  const d = e.data;
+  if (d && d.type === 'precache-images' && Array.isArray(d.urls)) e.waitUntil(precache(d.urls));
+});
+
 // Push notifications: show a notification when the server sends one.
 self.addEventListener('push', e => {
   let d = {};
@@ -145,4 +181,5 @@ self.addEventListener('notificationclick', e => {
     })
   );
 });
-                   
+
+                        
