@@ -12,8 +12,8 @@ const LIBS = [
   'https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap'
 ];
 const CDN_HOSTS = ['cdn.jsdelivr.net', 'fonts.googleapis.com', 'fonts.gstatic.com'];
-const IMG_MAX_ITEMS = 250;            // keep at most this many images
-const IMG_MAX_BYTES = 2.5 * 1024 * 1024; // skip single images bigger than this
+const IMG_MAX_ITEMS = 150;            // keep at most this many images
+const IMG_MAX_BYTES = 8 * 1024 * 1024;   // skip single images bigger than this
 
 self.addEventListener('install', e => {
   e.waitUntil(
@@ -145,4 +145,4 @@ self.addEventListener('notificationclick', e => {
     })
   );
 });
-          
+                   
