@@ -3,7 +3,7 @@
 //  - the Supabase script + Bengali font are cached, so the app starts offline
 //  - file images/thumbnails are cached when seen once, so they show offline
 //  - Supabase login / database / downloads are never touched
-const VER = 'sajesson-v5';
+const VER = 'sajesson-v6';
 const IMG = 'sajesson-img-v1';
 const SHELL = ['./', 'index.html', 'manifest.json', 'icon-192.png', 'icon-512.png', 'maskable-512.png'];
 // outside files the page needs to start (same URLs as in index.html)
@@ -182,4 +182,4 @@ self.addEventListener('notificationclick', e => {
   );
 });
 
-  
+                                    
