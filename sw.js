@@ -1,15 +1,16 @@
-// Sajesson Guide service worker v3 — works offline.
+// Sajesson Guide service worker v8 (instant start) — works offline.
 // v2 behaviour kept (network-first pages, cached shell, push notifications) and added:
 //  - the Supabase script + Bengali font are cached, so the app starts offline
 //  - file images/thumbnails are cached when seen once, so they show offline
 //  - Supabase login / database / downloads are never touched
-const VER = 'sajesson-v7';
+const VER = 'sajesson-v8';
 const IMG = 'sajesson-img-v1';
 const SHELL = ['./', 'index.html', 'manifest.json', 'icon-192.png', 'icon-512.png', 'maskable-512.png'];
 // outside files the page needs to start (same URLs as in index.html)
 const LIBS = [
   'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4',
-  'https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap'
+  'https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap',
+  'https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@400;500&display=swap'
 ];
 const CDN_HOSTS = ['cdn.jsdelivr.net', 'fonts.googleapis.com', 'fonts.gstatic.com'];
 const IMG_MAX_ITEMS = 600;            // keep at most this many images
@@ -94,22 +95,23 @@ self.addEventListener('fetch', e => {
     return;
   }
 
-  // Pages: network first (updates show immediately). Offline, or if the network is very slow, the saved page opens.
+  // Pages: the saved page opens INSTANTLY (fast start), and a fresh copy is fetched in the background
+  // for the next open. Login redirects (?code= / access_token) and first-ever visits use the network.
   if (req.mode === 'navigate') {
     e.respondWith((async () => {
       const cache = await caches.open(VER);
-      const net = fetch(req).then(res => {
-        if (res && res.ok) cache.put('index.html', res.clone());
+      const isAuth = /[?&](code|error)=/.test(url.search) || /access_token=|error=/.test(url.hash);
+      const saved = () => cache.match('index.html').then(r => r || cache.match('./'));
+      const fetchFresh = () => fetch(req).then(res => {
+        if (res && res.ok && !isAuth) cache.put('index.html', res.clone());
         return res;
       });
-      net.catch(() => {});
-      const saved = () => cache.match('index.html').then(r => r || cache.match('./'));
-      try {
-        return await Promise.race([net, new Promise((_, rej) => setTimeout(() => rej(new Error('slow')), 4500))]);
-      } catch (_) {
-        const r = await saved();
-        return r || net;
+      if (isAuth) {
+        try { return await fetchFresh(); } catch (_) { const r = await saved(); if (r) return r; throw _; }
       }
+      const hit = await saved();
+      if (hit) { e.waitUntil(fetchFresh().catch(() => {})); return hit; }
+      return fetchFresh();
     })());
     return;
   }
@@ -181,4 +183,4 @@ self.addEventListener('notificationclick', e => {
     })
   );
 });
-                   
+                      
