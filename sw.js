@@ -1,9 +1,9 @@
-// Sajesson Guide service worker v8 (instant start) — works offline.
+// Sajesson Guide service worker v9 (instant start) — works offline.
 // v2 behaviour kept (network-first pages, cached shell, push notifications) and added:
 //  - the Supabase script + Bengali font are cached, so the app starts offline
 //  - file images/thumbnails are cached when seen once, so they show offline
 //  - Supabase login / database / downloads are never touched
-const VER = 'sajesson-v8';
+const VER = 'sajesson-v9';
 const IMG = 'sajesson-img-v1';
 const SHELL = ['./', 'index.html', 'manifest.json', 'icon-192.png', 'icon-512.png', 'maskable-512.png'];
 // outside files the page needs to start (same URLs as in index.html)
@@ -183,4 +183,5 @@ self.addEventListener('notificationclick', e => {
     })
   );
 });
-                      
+
+                   
