@@ -1,9 +1,9 @@
-// Sajesson Guide service worker v10 (instant start) — works offline.
+// Sajesson Guide service worker v11 (instant start) — works offline.
 // v2 behaviour kept (network-first pages, cached shell, push notifications) and added:
 //  - the Supabase script + Bengali font are cached, so the app starts offline
 //  - file images/thumbnails are cached when seen once, so they show offline
 //  - Supabase login / database / downloads are never touched
-const VER = 'sajesson-v10';
+const VER = 'sajesson-v11';
 const IMG = 'sajesson-img-v1';
 const SHELL = ['./', 'index.html', 'manifest.json', 'icon-192.png', 'icon-512.png', 'maskable-512.png'];
 // outside files the page needs to start (same URLs as in index.html)
@@ -98,6 +98,10 @@ self.addEventListener('fetch', e => {
   // Pages: the saved page opens INSTANTLY (fast start), and a fresh copy is fetched in the background
   // for the next open. Login redirects (?code= / access_token) and first-ever visits use the network.
   if (req.mode === 'navigate') {
+    // Only the app's home page uses the saved-page logic below. Other pages
+    // (about.html, privacy.html, contact.html) must load normally from the network,
+    // otherwise they would show the home page and overwrite the saved copy of it.
+    if (!(url.pathname.endsWith('/') || url.pathname.endsWith('/index.html'))) return;
     e.respondWith((async () => {
       const cache = await caches.open(VER);
       const isAuth = /[?&](code|error)=/.test(url.search) || /access_token=|error=/.test(url.hash);
@@ -183,4 +187,5 @@ self.addEventListener('notificationclick', e => {
     })
   );
 });
-                   
+
+                     
