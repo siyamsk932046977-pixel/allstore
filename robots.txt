@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://allstore.pages.dev/sitemap.xml
+
+Sitemap: https://siyamsk932046977-pixel.github.io/allstore/sitemap.xml
